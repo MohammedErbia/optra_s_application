@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Optra Colors */
+    --primary-green: #11ecb5;
+    --dark-green: #319a7f;
+    --black: #000000;
+    --dark-gray: #121212;
+    --light-gray: #b0b0b0;
+    --white: #ffffff;
+    --border-color: #2c2c2c;
+  }
+}
+
+@layer components {
+  .section-title {
+    @apply text-5xl font-extrabold leading-[52px] font-cairo;
+  }
+  
+  .section-subtitle {
+    @apply text-lg font-normal leading-7 font-cairo text-white;
+  }
+  
+  .service-card {
+    @apply rounded-[20px] border-0 border-optra-border p-8;
+  }
+  
+  .service-title {
+    @apply text-[27px] font-semibold leading-[50px] text-white font-cairo;
+  }
+  
+  .service-description {
+    @apply text-base font-normal leading-[29px] text-optra-lightGray font-cairo;
+  }
+  
+  .testimonial-card {
+    @apply bg-optra-darkGray border border-optra-border rounded-[10px] p-8 shadow-md;
+  }
+  
+  .stat-number {
+    @apply text-4xl font-bold leading-[75px] text-white font-cairo;
+  }
+  
+  .stat-label {
+    @apply text-2xl font-semibold leading-[45px] text-optra-green font-cairo;
+  }
+}
