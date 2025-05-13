@@ -1,14 +1,24 @@
-module.exports = {
-  content: ["./src/**/*.{js,ts,jsx,tsx,html,mdx}"],
-  darkMode: "class",
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: 'class', // Enable class-based dark mode
   theme: {
     extend: {
       colors: {
         primary: {
-          background: "var(--primary-background)",
-          foreground: "var(--primary-foreground)",
-          light: "var(--primary-light)",
-          dark: "var(--primary-dark)",
+          light: '#4f46e5',
+          dark: '#6366f1',
+        },
+        background: {
+          light: '#ffffff',
+          dark: '#1a1a1a',
+        },
+        text: {
+          light: '#1f2937',
+          dark: '#f3f4f6',
         },
         secondary: {
           background: "var(--secondary-background)",
@@ -45,4 +55,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+}

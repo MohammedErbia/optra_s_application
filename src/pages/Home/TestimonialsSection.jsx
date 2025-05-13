@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const TestimonialsSection = () => {
+  const { isDarkMode } = useContext(ThemeContext);
   const testimonials = [
     {
       id: 1,
@@ -46,13 +48,13 @@ const TestimonialsSection = () => {
   );
 
   return (
-    <section className="bg-optra-darkGray py-20">
+    <section className={`${isDarkMode ? 'bg-optra-darkGray' : 'bg-gray-50'} py-20`}>
       <div className="container mx-auto px-6">
         <div className="mb-12">
-          <h2 className="text-5xl font-extrabold text-white leading-tight mb-6 font-roboto">
+          <h2 className={`text-5xl font-extrabold ${isDarkMode ? 'text-white' : 'text-gray-900'} leading-tight mb-6 font-roboto`}>
             What Our <span className="text-optra-green">Clients Say</span> About Us
           </h2>
-          <p className="text-xl text-white max-w-3xl font-roboto">
+          <p className={`text-xl ${isDarkMode ? 'text-white' : 'text-gray-600'} max-w-3xl font-roboto`}>
             We are proud that our clients' experiences genuinely reflect the excellence of our digital services
           </p>
         </div>
@@ -61,9 +63,9 @@ const TestimonialsSection = () => {
           {visibleTestimonials.map((testimonial) => (
             <div 
               key={testimonial.id} 
-              className="bg-optra-darkGray border border-optra-border rounded-[10px] p-8 shadow-md"
+              className={`${isDarkMode ? 'bg-optra-darkGray border-optra-border' : 'bg-white border-gray-200'} border rounded-[10px] p-8 shadow-md`}
             >
-              <p className="text-lg text-white mb-8 font-roboto">
+              <p className={`text-lg ${isDarkMode ? 'text-white' : 'text-gray-700'} mb-8 font-roboto`}>
                 {testimonial.text}
               </p>
               <div className="flex items-center">
@@ -72,7 +74,7 @@ const TestimonialsSection = () => {
                   alt={testimonial.name} 
                   className="w-16 h-16 rounded-full mr-4"
                 />
-                <h4 className="text-lg font-normal text-white font-roboto">
+                <h4 className={`text-lg font-normal ${isDarkMode ? 'text-white' : 'text-gray-900'} font-roboto`}>
                   {testimonial.name}
                 </h4>
               </div>

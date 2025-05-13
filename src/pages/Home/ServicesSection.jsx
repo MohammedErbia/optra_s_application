@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '../../components/common/Card';
+import Counter from './Counter';
 
 const ServicesSection = () => {
   const services = [
@@ -42,13 +43,13 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section className="bg-optra-darkGray py-20">
+    <section className="bg-background-light dark:bg-optra-darkGray py-20 transition-colors">
       <div className="container mx-auto px-6">
         <div className="mb-12">
-          <h2 className="text-5xl font-extrabold text-white leading-tight mb-8 font-cairo">
+          <h2 className="text-5xl font-extrabold text-text-light dark:text-white leading-tight mb-8 font-cairo transition-colors">
             Quality you can rely on, in services you truly deserve
           </h2>
-          <p className="text-lg text-white max-w-3xl font-cairo">
+          <p className="text-lg text-text-light dark:text-white max-w-3xl font-cairo transition-colors">
             Embark on a journey of innovation and technology with our wide range of services that enhance your digital presence, starting from captivating designs to intelligent, strategic solutions.
           </p>
         </div>
@@ -63,12 +64,17 @@ const ServicesSection = () => {
                 <img 
                   src={service.icon} 
                   alt={service.title} 
-                  className="w-[90px] h-[90px]"
+                  className="h-12 filter dark:invert dark:brightness-100 dark:contrast-100 invert-0 brightness-0 contrast-100"
                 />
               }
               className="h-full"
             />
           ))}
+        </div>
+
+        <div>
+          <h3>Clients</h3>
+          <div><Counter end={12000} suffix="K" /></div>
         </div>
       </div>
     </section>

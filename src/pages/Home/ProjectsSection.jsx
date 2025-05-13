@@ -34,10 +34,10 @@ const ProjectsSection = () => {
   ];
 
   return (
-    <section className="bg-optra-black py-20">
+    <section className="bg-background-light dark:bg-optra-black py-20 transition-colors">
       <div className="container mx-auto px-6">
         <div className="mb-12">
-          <h3 className="text-xl font-bold tracking-[3px] uppercase text-white mb-4 font-cairo">
+          <h3 className="text-xl font-bold tracking-[3px] uppercase text-text-light dark:text-white mb-4 font-cairo transition-colors">
             Our work
           </h3>
           <h2 className="text-5xl font-extrabold text-optra-green leading-tight font-cairo">
@@ -53,21 +53,21 @@ const ProjectsSection = () => {
                 alt={project.title} 
                 className="w-full h-auto rounded-md mb-4"
               />
-              <p className="text-base font-medium text-white mb-1 font-cairo">
+              <p className="text-base font-medium text-text-light dark:text-white mb-1 font-cairo transition-colors">
                 {project.category}
               </p>
-              <h3 className="text-4xl font-bold text-white mb-4 font-cairo">
+              <h3 className="text-4xl font-bold text-text-light dark:text-white mb-4 font-cairo transition-colors">
                 {project.title}
               </h3>
               <Link 
                 to={project.link} 
-                className="flex items-center text-optra-green font-medium text-base font-cairo"
+                className="flex items-center text-optra-green font-medium text-base font-cairo hover:opacity-80 transition-opacity"
               >
                 View Case Study
                 <img 
                   src="/images/img_icon_jamicons_outline_logos_arrowright_24x24.svg" 
                   alt="Arrow" 
-                  className="ml-2 w-6 h-6"
+                  className="ml-2 w-6 h-6 dark:invert"
                 />
               </Link>
             </div>

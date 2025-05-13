@@ -11,7 +11,7 @@ const Card = ({
   onClick,
   ...props
 }) => {
-  const baseClasses = 'bg-optra-darkGray rounded-[20px] overflow-hidden transition-all duration-300';
+  const baseClasses = 'bg-white dark:bg-optra-darkGray rounded-[20px] overflow-hidden transition-all duration-300 hover:shadow-lg';
   const cardClasses = `${baseClasses} ${className}`;
 
   return (
@@ -34,13 +34,13 @@ const Card = ({
         )}
         
         {title && (
-          <h3 className="text-[27px] font-semibold leading-[50px] text-white font-cairo mb-2">
+          <h3 className="text-[27px] font-semibold leading-[50px] text-text-light dark:text-white font-cairo mb-2 transition-colors">
             {title}
           </h3>
         )}
         
         {description && (
-          <p className="text-base font-normal leading-[29px] text-optra-lightGray font-cairo">
+          <p className="text-base font-normal leading-[29px] text-gray-600 dark:text-optra-lightGray font-cairo transition-colors">
             {description}
           </p>
         )}
