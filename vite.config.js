@@ -6,9 +6,16 @@ import tagger from "@dhiwise/component-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(),tagger()],
+  base: '/optra_s_application/',
+  plugins: [react(), tagger()],
   build: {
-    outDir: "build",
+    outDir: "dist",
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
   },
   resolve: {
     alias: {
