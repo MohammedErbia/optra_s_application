@@ -13,7 +13,7 @@ const HomePage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  // add a scroll to top button 
+     
 
   return (
     <div className="bg-background-light dark:bg-optra-black min-h-screen transition-colors">

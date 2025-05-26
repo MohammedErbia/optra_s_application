@@ -1,76 +1,40 @@
 import React from 'react';
+import { useWorks } from '../../hooks/useWorks';
 import { Link } from 'react-router-dom';
 
 const ProjectsSection = () => {
-  const projects = [
-    {
-      id: 1,
-      title: 'Wild Horse Event',
-      category: 'Mobile',
-      image: '/images/img_picture_326x635.png',
-      link: '/case-study/wild-horse-event',
-    },
-    {
-      id: 2,
-      title: 'Wild Horse Event',
-      category: 'Mobile',
-      image: '/images/img_picture_2.png',
-      link: '/case-study/wild-horse-event',
-    },
-    {
-      id: 3,
-      title: 'Wild Horse Event',
-      category: 'Mobile',
-      image: '/images/img_picture_326x635.png',
-      link: '/case-study/wild-horse-event',
-    },
-    {
-      id: 4,
-      title: 'Wild Horse Event',
-      category: 'Mobile',
-      image: '/images/img_picture_326x635.png',
-      link: '/case-study/wild-horse-event',
-    },
-  ];
+  const { works, loading, error } = useWorks();
+
+  if (loading) return <div>Loading projects...</div>;
+  if (error) return <div>Error loading projects: {error}</div>;
 
   return (
-    <section className="bg-background-light dark:bg-optra-black py-20 transition-colors">
+    <section className="py-20">
       <div className="container mx-auto px-6">
-        <div className="mb-12">
-          <h3 className="text-xl font-bold tracking-[3px] uppercase text-text-light dark:text-white mb-4 font-cairo transition-colors">
-            Our work
-          </h3>
-          <h2 className="text-5xl font-extrabold text-optra-green leading-tight font-cairo">
+        <h2 className="text-4xl font-bold text-center mb-12">
             Experience the story behind our creative projects
           </h2>
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((project) => (
-            <div key={project.id} className="flex flex-col">
+          {works.map((work) => (
+            <Link 
+              key={work.id} 
+              to={`/works/${work.slug}`}
+              className="group relative overflow-hidden rounded-lg"
+            >
               <img 
-                src={project.image} 
-                alt={project.title} 
-                className="w-full h-auto rounded-md mb-4"
+                src={work.image}
+                alt={work.title}
+                className="w-full h-[240px] object-cover transition-transform group-hover:scale-105"
               />
-              <p className="text-base font-medium text-text-light dark:text-white mb-1 font-cairo transition-colors">
-                {project.category}
-              </p>
-              <h3 className="text-4xl font-bold text-text-light dark:text-white mb-4 font-cairo transition-colors">
-                {project.title}
-              </h3>
-              <Link 
-                to={project.link} 
-                className="flex items-center text-optra-green font-medium text-base font-cairo hover:opacity-80 transition-opacity"
-              >
-                View Case Study
-                <img 
-                  src="/images/img_icon_jamicons_outline_logos_arrowright_24x24.svg" 
-                  alt="Arrow" 
-                  className="ml-2 w-6 h-6 dark:invert"
-                />
+              <div className="absolute top-4 left-4 bg-[#14B8A6] text-white px-3 py-1 rounded">
+                {work.category}
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
+                <h3 className="text-white text-xl font-semibold mb-2">{work.title}</h3>
+                <span className="text-[#14B8A6]">View Case Study →</span>
+              </div>
               </Link>
-            </div>
           ))}
         </div>
       </div>
