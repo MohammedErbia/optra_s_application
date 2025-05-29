@@ -1,23 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Counter from './Counter';
+import { useMissionStats } from '../../hooks/useMissionStats';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import { CSSTransition } from 'react-transition-group'; // Removed TransitionGroup as it's not used here
+import './MissionSection.css'; // Import CSS for fade-in transition
+import { formatMissionStatValue } from '../../constants/missionStatTypes'; // Import formatting function
 
 const MissionSection = () => {
-  const stats = [
-    { id: 1, label: 'Clients', value: '12K' },
-    { id: 2, label: 'Annual growth', value: '55%' },
-    { id: 3, label: 'No. of projects', value: '5k' },
-    { id: 4, label: 'Positive ratings', value: '80%' },
-  ];
+  const { data: stats, loading, error } = useMissionStats();
+  const [isVisible, setIsVisible] = useState(false);
+  const [startCounterAnimation, setStartCounterAnimation] = useState(false); // New state for counter animation
+  const sectionRef = React.useRef(null);
+  const transitionNodeRef = React.useRef(null);
 
-  // Helper to split value into number and suffix
-  const parseValue = (value) => {
-    const match = value.match(/(\d+)([a-zA-Z%]*)/);
-    if (!match) return { number: value, suffix: '' };
-    return { number: Number(match[1]), suffix: match[2] };
-  };
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
+  if (error) return <div className="py-12 text-center text-red-500">Error loading mission stats: {error.message}</div>;
 
   return (
-    <section className="bg-background-light dark:bg-optra-black py-20 transition-colors">
+    <section ref={sectionRef} className="bg-background-light dark:bg-optra-black py-20 transition-colors">
       <div className="container mx-auto px-6">
         <div className="mb-12">
           <h2 className="text-5xl font-extrabold text-text-light dark:text-white leading-tight max-w-3xl font-cairo transition-colors">
@@ -26,24 +47,38 @@ const MissionSection = () => {
         </div>
 
         <div className="bg-gray-100 dark:bg-optra-darkGray rounded-[10px] p-8 mt-8 transition-colors">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => {
-              const { number, suffix } = parseValue(stat.value);
-              return (
-                <div key={stat.id} className="flex flex-col items-center">
-                  <h3 className="text-2xl font-semibold text-optra-green mb-2 font-cairo">
-                    {stat.label}
-                  </h3>
-                  <p className="text-4xl font-bold text-text-light dark:text-white font-cairo transition-colors">
-                    <Counter end={number} suffix={suffix} />
-                  </p>
-                  {index < stats.length - 1 && (
-                    <div className="hidden lg:block h-10 w-px bg-gray-300 dark:bg-[#b8b8b8] absolute right-0 transition-colors"></div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+          {loading && <LoadingSpinner size="large" />}
+          {!loading && (!stats || stats.length === 0) && (
+            <div className="text-center text-text-light dark:text-white">No mission stats available.</div>
+          )}
+          {!loading && stats && stats.length > 0 && (
+            <CSSTransition
+              in={isVisible}
+              timeout={500}
+              classNames="fade"
+              appear
+              nodeRef={transitionNodeRef}
+              onEntered={() => setStartCounterAnimation(true)} // Start counter animation after fade-in
+            >
+              <div ref={transitionNodeRef} className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ${stats.length > 10 ? 'overflow-x-auto whitespace-nowrap flex' : ''}`}>
+                {stats.map((stat) => {
+                  const { displayValue, suffix } = formatMissionStatValue(stat.value, stat.type);
+                  return (
+                    <div key={stat.id} className={`flex flex-col items-center ${stats.length > 10 ? 'inline-block px-4' : ''}`}>
+                      <h3 className="text-2xl font-semibold text-optra-green mb-2 font-cairo">
+                        {stat.label}
+                      </h3>
+                      {startCounterAnimation && ( // Render counter only when animation should start
+                        <p className="text-4xl font-bold text-text-light dark:text-white font-cairo transition-colors">
+                          <Counter end={displayValue} suffix={suffix} />
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </CSSTransition>
+          )}
         </div>
       </div>
     </section>

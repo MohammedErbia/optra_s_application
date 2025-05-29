@@ -9,11 +9,18 @@ const ProjectsSection = () => {
   if (error) return <div>Error loading projects: {error}</div>;
 
   return (
-    <section className="py-20">
+    <section className="py-20 bg-background-light dark:bg-optra-black transition-colors">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center mb-12">
-            Experience the story behind our creative projects
+        <div className="text-left mb-12">
+          <div className="uppercase tracking-[0.2em] text-base md:text-lg font-semibold mb-2 text-text-light dark:text-white/70 font-cairo transition-colors">
+            Our Work
+          </div>
+          <br />
+          <h2 className="text-4xl md:text-6xl font-extrabold leading-tight font-cairo text-text-light dark:text-white transition-colors">
+            Experience the story behind our <br />
+            <span className="text-optra-green">creative projects</span>
           </h2>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {works.map((work) => (

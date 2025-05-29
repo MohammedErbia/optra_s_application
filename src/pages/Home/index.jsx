@@ -20,16 +20,28 @@ const HomePage = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-background-light dark:bg-optra-black pt-24 relative min-h-[799px] flex items-center transition-colors">
-        <div className="absolute top-0 right-0 z-0">
-          <img src="/images/img_frame_2310.svg" alt="Background Pattern" className="h-[797px] w-[366px]" />
+      <section className="bg-background-light dark:bg-optra-black pt-24 relative min-h-[950px] flex items-center transition-colors">
+        <div className="absolute top-0 left-0 z-0">
+          <img src="/images/img_frame_2310.svg" alt="Background Pattern" className="h-[1020px] w-[366px]" />
         </div>
         
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
-            <h1 className="text-6xl font-extrabold text-text-light dark:text-white mb-6 leading-tight font-cairo transition-colors">
-              We transform ideas into <br />digital Solutions
-            </h1>
+          <h1 className="text-6xl font-extrabold text-text-light dark:text-white mb-6 leading-tight font-cairo transition-colors text-center">
+  We transform{" "}
+  <span className="relative inline-block">
+    <span className="relative z-10">ideas</span>
+    <span className="absolute left-0 bottom-0 w-full h-1 bg-teal-400"></span>
+  </span>{" "}
+  into
+  <br />
+  digital{" "}
+  <span className="relative inline-block">
+    <span className="relative z-10">Solutions</span>
+    <span className="absolute left-0 bottom-0 w-full h-1 bg-teal-400"></span>
+  </span>
+</h1>
+
             
             <p className="text-lg text-text-light dark:text-white mb-10 font-cairo transition-colors">
               A passionate collective of creatives, designers, and developers, committed to <br />
