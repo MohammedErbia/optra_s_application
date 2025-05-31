@@ -158,7 +158,7 @@ const TestimonialsSection = () => {
                     aria-label="Previous testimonial page"
                   >
                     <img 
-                      src="/optra_s_application/images/img_icon_iconoir_arrowleft.svg" 
+                      src="/images/img_icon_iconoir_arrowleft.svg" 
                       alt="Previous" 
                       className="w-6 h-6"
                     />
@@ -169,7 +169,7 @@ const TestimonialsSection = () => {
                     aria-label="Next testimonial page"
                   >
                     <img 
-                      src="/optra_s_application/images/img_icon_iconoir_arrowleft.svg" 
+                      src="/images/img_icon_iconoir_arrowleft.svg" 
                       alt="Next" 
                       className="w-6 h-6 transform rotate-180"
                     />
