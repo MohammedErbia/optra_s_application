@@ -1,0 +1,35 @@
+/* src/pages/Home/TestimonialsSection.css */
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+
+/* Remove Testimonial Card Styles for featured item */
+
+/* Highlighted Testimonial Card Style */
+.testimonial-card.highlighted {
+  transform: scale(1.05); /* Slightly bigger */
+  transition: transform 300ms ease-in-out; /* Smooth transition */
+}
+
+/* Add media queries here if needed for responsiveness for different screen sizes */
+
+/* Add hover effect to testimonial card */
+.testimonial-card:hover {
+  transform: scale(1.03); /* Slightly enlarge on hover */
+  transition: transform 0.3s ease-in-out; /* Smooth transition on hover */
+} 
