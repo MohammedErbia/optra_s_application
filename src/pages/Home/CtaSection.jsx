@@ -16,7 +16,7 @@ const CtaSection = () => {
             <Button 
               variant="primary" 
               size="medium"
-              className="mt-8"
+              className="mt-8 mx-auto flex items-center justify-center"
               icon={<img src="/images/img_icon_jamicons_outline_logos_arrowright.svg" alt="Arrow" className="w-6 h-6" />}
               onClick={() => window.location.href = '/contact'}
             >

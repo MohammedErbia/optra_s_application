@@ -5,29 +5,30 @@ const AboutSection = () => {
     <section className="bg-background-light dark:bg-optra-black py-20 transition-colors">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="relative grid grid-cols-2 gap-4">
-            <div className="col-span-1">
-              <img 
-                src="/images/img_picture.png" 
-                alt="Team member" 
-                className="w-full h-auto rounded-[20px] mb-4"
-              />
-            </div>
-            <div className="col-span-1 mt-12">
-              <img 
-                src="/images/img_picture_384x189.png" 
-                alt="Team member" 
-                className="w-full h-auto rounded-[20px] mb-4"
-              />
-            </div>
-            <div className="col-span-1 mt-8">
-              <img 
-                src="/images/img_picture_1.png" 
-                alt="Team member" 
-                className="w-full h-auto rounded-[20px]"
-              />
-            </div>
-          </div>
+        <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+  <div className="mt-8 md:mt-12">
+    <img 
+      src="/images/img_picture.png" 
+      alt="Team member" 
+      className="w-full h-auto rounded-[20px]"
+    />
+  </div>
+  <div className="mt-0 md:-mt-4">
+    <img 
+      src="/images/img_picture_384x189.png" 
+      alt="Team member" 
+      className="w-full h-auto rounded-[20px]"
+    />
+  </div>
+  <div className="mt-8 md:mt-12">
+    <img 
+      src="/images/img_picture_1.png" 
+      alt="Team member" 
+      className="w-full h-auto rounded-[20px]"
+    />
+  </div>
+</div>
+
           
           <div>
             <h2 className="text-5xl font-extrabold text-optra-green mb-6 font-cairo">

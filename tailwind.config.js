@@ -51,6 +51,7 @@ export default {
       fontFamily: {
         'cairo': ['Cairo', 'sans-serif'],
         'roboto': ['Roboto', 'sans-serif'],
+        'orbitron': ['Orbitron', 'sans-serif'],
       },
     },
   },
