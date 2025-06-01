@@ -41,7 +41,7 @@ const MissionSection = () => {
     <section ref={sectionRef} className="bg-background-light dark:bg-optra-black py-20 transition-colors">
       <div className="container mx-auto px-6">
         <div className="mb-12">
-          <h2 className="text-5xl font-extrabold text-text-light dark:text-white leading-tight max-w-3xl font-cairo transition-colors">
+          <h2 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-extrabold text-text-light dark:text-white leading-tight max-w-3xl font-cairo transition-colors">
             Delve into our mission and our dedication to <span className="text-optra-green">elevating development</span>
           </h2>
         </div>
@@ -65,11 +65,11 @@ const MissionSection = () => {
                   const { displayValue, suffix } = formatMissionStatValue(stat.value, stat.type);
                   return (
                     <div key={stat.id} className={`flex flex-col items-center ${stats.length > 10 ? 'inline-block px-4' : ''}`}>
-                      <h3 className="text-2xl font-semibold text-optra-green mb-2 font-cairo">
+                      <h3 className="text-xl sm:text-xl md:text-2xl font-semibold text-optra-green mb-2 font-cairo">
                         {stat.label}
                       </h3>
                       {startCounterAnimation && ( // Render counter only when animation should start
-                        <p className="text-4xl font-bold text-text-light dark:text-white font-cairo transition-colors">
+                        <p className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold text-text-light dark:text-white font-cairo transition-colors">
                           <Counter end={displayValue} suffix={suffix} />
                         </p>
                       )}

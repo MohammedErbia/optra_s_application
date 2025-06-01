@@ -27,14 +27,14 @@ const HomePage = () => {
         
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-6xl font-extrabold text-text-light dark:text-white mb-6 leading-tight font-cairo transition-colors text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-text-light dark:text-white mb-6 leading-tight font-cairo transition-colors text-center">
   We transform{" "}
   <span className="relative inline-block">
     <span className="relative z-10">ideas</span>
     <span className="absolute left-0 bottom-0 w-full h-1 bg-teal-400"></span>
   </span>{" "}
   into
-  <br />
+  <br className="sm:hidden"/>
   digital{" "}
   <span className="relative inline-block">
     <span className="relative z-10">Solutions</span>
@@ -43,8 +43,8 @@ const HomePage = () => {
 </h1>
 
             
-            <p className="text-lg text-text-light dark:text-white mb-10 font-cairo transition-colors">
-              A passionate collective of creatives, designers, and developers, committed to <br />
+            <p className="text-lg text-text-light dark:text-white mb-10 font-cairo transition-colors sm:text-base md:text-lg">
+              A passionate collective of creatives, designers, and developers, committed to <br className="sm:hidden"/>
               making a real impact in digital development.
             </p>
             
@@ -66,7 +66,7 @@ const HomePage = () => {
           </div>
         </div>
         
-        <div className="absolute bottom-0 right-0 z-0">
+        <div className="absolute bottom-0 right-0 z-0 hidden md:block">
           <img src="/images/img_export_2.png" alt="Device Mockup" className="h-[414px] w-[414px]" />
         </div>
       </section>

@@ -28,8 +28,10 @@ const navItems = [
 const Header = () => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [language, setLanguage] = useState('en');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const navRef = useRef();
+  const sideMenuRef = useRef();
 
   // Handle nav underline
   const getActiveIndex = () => {
@@ -54,6 +56,16 @@ const Header = () => {
       console.log('Language switched to', next);
       return next;
     });
+  };
+
+  // Toggle mobile menu
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Close menu when a link is clicked
+  const closeMenu = () => {
+    setIsMenuOpen(false);
   };
 
   return (
@@ -89,6 +101,7 @@ const Header = () => {
                       key={sub.path}
                       to={sub.path}
                       className="block px-4 py-2 text-text-light dark:text-white hover:bg-gray-100 dark:hover:bg-optra-darkGray"
+                      onClick={closeMenu}
                     >
                       {sub.label}
                     </Link>
@@ -99,7 +112,7 @@ const Header = () => {
           ))}
         </nav>
 
-        <div className="flex items-center space-x-4">
+        <div className="hidden md:flex items-center space-x-4">
           <ThemeToggle />
           <button
             onClick={handleLanguageToggle}
@@ -117,7 +130,88 @@ const Header = () => {
             Apply now
           </Button>
         </div>
+
+        <div className="md:hidden flex items-center">
+          <button onClick={toggleMenu} className="text-text-light dark:text-white focus:outline-none">
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
       </div>
+
+      <div 
+        ref={sideMenuRef}
+        className={`fixed top-0 right-0 h-full w-64 bg-background-light dark:bg-optra-black shadow-lg transform transition-transform duration-300 ease-in-out z-50 md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+      >
+        <div className="p-6">
+          <button onClick={toggleMenu} className="text-text-light dark:text-white absolute top-4 right-4 focus:outline-none">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+          <div className="mt-12">
+            <nav className="flex flex-col space-y-4">
+              {navItems.map((item) => (
+                <div key={item.label}>
+                  {item.dropdown ? (
+                    <div className="text-text-light dark:text-white font-semibold text-lg font-cairo cursor-pointer" onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}>
+                      {item.label}
+                    </div>
+                  ) : (
+                    <Link
+                      to={item.path}
+                      className="block text-text-light dark:text-white font-semibold text-lg font-cairo hover:text-optra-green transition-colors"
+                      onClick={closeMenu}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
+                  {item.dropdown && openDropdown === item.label && (
+                    <div className="ml-4 mt-2 space-y-2">
+                      {item.dropdown.map(sub => (
+                        <Link
+                          key={sub.path}
+                          to={sub.path}
+                          className="block text-text-light dark:text-white text-base font-cairo hover:text-optra-green transition-colors"
+                          onClick={closeMenu}
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </nav>
+            <div className="mt-8 flex flex-col space-y-4">
+              <ThemeToggle />
+               <button
+                onClick={() => {handleLanguageToggle(); closeMenu();}}
+                className="flex items-center px-3 py-2 rounded-lg border border-[#14B8A6] text-[#14B8A6] font-bold font-cairo hover:bg-[#14B8A6] hover:text-white transition-colors justify-center"
+                aria-label="Toggle language"
+              >
+                <img src="/images/img_translate.svg" alt="Language" className="w-6 h-6 mr-1" />
+                {language === 'en' ? 'عربي' : 'English'}
+              </button>
+              <Button
+                variant="primary"
+                className="h-12 rounded-lg w-full"
+                icon={<img src="/images/img_icon_jamicons_outline_logos_arrowright.svg" alt="Arrow" className="w-6 h-6" />}
+                 onClick={() => {window.location.href = '/apply'; closeMenu();}}
+              >
+                Apply now
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {isMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          onClick={toggleMenu}
+        ></div>
+      )}
     </header>
   );
 };

@@ -81,7 +81,7 @@ const TestimonialsSection = () => {
 
     // Cleanup function - always runs on unmount or before effect re-runs
     return () => {
-      console.log('Cleaning up timers', timersRef.current.length);
+      // console.log('Cleaning up timers', timersRef.current.length);
       timersRef.current.forEach(timer => clearTimeout(timer));
     };
 
@@ -103,10 +103,10 @@ const TestimonialsSection = () => {
     <section ref={sectionRef} className={`${isDarkMode ? 'bg-optra-darkGray' : 'bg-gray-50'} py-20 transition-colors`}>
       <div className="container mx-auto px-6">
         <div className="mb-12">
-          <h2 className={`text-5xl font-extrabold ${isDarkMode ? 'text-white' : 'text-gray-900'} leading-tight mb-6 font-roboto`}>
+          <h2 className={`text-5xl font-extrabold ${isDarkMode ? 'text-white' : 'text-gray-900'} leading-tight mb-6 font-roboto sm:text-3xl md:text-4xl lg:text-5xl`}>
             What Our <span className="text-optra-green">Clients Say</span> About Us
           </h2>
-          <p className={`text-xl ${isDarkMode ? 'text-white' : 'text-gray-600'} max-w-3xl font-roboto`}>
+          <p className={`text-xl ${isDarkMode ? 'text-white' : 'text-gray-600'} max-w-3xl font-roboto sm:text-base md:text-lg`}>
             We are proud that our clients' experiences genuinely reflect the excellence of our digital services
           </p>
         </div>
@@ -139,9 +139,9 @@ const TestimonialsSection = () => {
                       <img 
                         src={testimonial.user_image}
                         alt={testimonial.name}
-                        className="w-16 h-16 rounded-full mr-4"
+                        className="w-16 h-16 rounded-full mr-4 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16"
                       />
-                      <h4 className={`text-lg font-normal ${isDarkMode ? 'text-white' : 'text-gray-900'} font-roboto`}>
+                      <h4 className={`text-lg font-normal ${isDarkMode ? 'text-white' : 'text-gray-900'} font-roboto text-base sm:text-lg`}>
                         {testimonial.name}
                       </h4>
                     </div>
@@ -158,7 +158,7 @@ const TestimonialsSection = () => {
                     aria-label="Previous testimonial page"
                   >
                     <img 
-                      src="/optra_s_application/images/img_icon_iconoir_arrowleft.svg" 
+                      src="/images/img_icon_iconoir_arrowleft.svg" 
                       alt="Previous" 
                       className="w-6 h-6"
                     />
@@ -169,7 +169,7 @@ const TestimonialsSection = () => {
                     aria-label="Next testimonial page"
                   >
                     <img 
-                      src="/optra_s_application/images/img_icon_iconoir_arrowleft.svg" 
+                      src="/images/img_icon_iconoir_arrowleft.svg" 
                       alt="Next" 
                       className="w-6 h-6 transform rotate-180"
                     />

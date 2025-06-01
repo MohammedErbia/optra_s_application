@@ -26,7 +26,7 @@ const Card = ({
         </div>
       )}
       
-      <div className="p-8">
+      <div className="p-8 flex flex-col h-full">
         {icon && (
           <div className="mb-6">
             {icon}
@@ -34,13 +34,13 @@ const Card = ({
         )}
         
         {title && (
-          <h3 className="text-[27px] font-semibold leading-[50px] text-text-light dark:text-white font-cairo mb-2 transition-colors">
+          <h3 className="text-[27px] font-semibold leading-[50px] text-text-light dark:text-white font-cairo mb-2 transition-colors text-lg md:text-xl lg:text-[27px]">
             {title}
           </h3>
         )}
         
         {description && (
-          <p className="text-base font-normal leading-[29px] text-gray-600 dark:text-optra-lightGray font-cairo transition-colors">
+          <p className="text-base font-normal leading-[29px] text-gray-600 dark:text-optra-lightGray font-cairo transition-colors overflow-hidden mt-auto flex-grow text-sm md:text-base">
             {description}
           </p>
         )}

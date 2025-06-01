@@ -111,8 +111,8 @@ const PartnersSection = () => {
     <section className={`py-16 md:py-24 ${isDarkMode ? 'bg-[#18181B]' : 'bg-[#F3F4F6]'} transition-colors`}>
       <div className="container mx-auto px-6">
         <div className="mb-12 text-left">
-          <div className={`uppercase tracking-[0.2em] text-base md:text-lg font-semibold mb-6 ${isDarkMode ? 'text-[#F3F4F6]/70' : 'text-[#18181B]/70'}`}>Collaboration with leading companies</div>
-          <h2 className={`text-4xl md:text-6xl font-extrabold mb-0 font-poppins ${isDarkMode ? 'text-white' : 'text-[#18181B]'}`} style={{ lineHeight: 1.1 }}>
+          <div className={`uppercase tracking-[0.2em] text-base md:text-lg font-semibold mb-6 ${isDarkMode ? 'text-[#F3F4F6]/70' : 'text-[#18181B]/70'} sm:text-sm`}>Collaboration with leading companies</div>
+          <h2 className={`text-4xl md:text-6xl font-extrabold mb-0 font-poppins ${isDarkMode ? 'text-white' : 'text-[#18181B]'} text-3xl sm:text-4xl md:text-5xl lg:text-6xl`} style={{ lineHeight: 1.1 }}>
             We partner with <span className="text-[#14B8A6]">10+</span> leading<br className="hidden md:block" /> companies
           </h2>
         </div>
@@ -144,10 +144,10 @@ const PartnersSection = () => {
                 <img
                   src={partner.logo_image}
                   alt={partner.name}
-                  className="h-12 w-auto max-w-[120px] object-contain"
+                  className="h-12 w-auto max-w-[120px] object-contain h-8 sm:h-10 md:h-12 w-auto max-w-[80px] sm:max-w-[100px] md:max-w-[120px]"
                   draggable="false"
                 />
-                <span className={`font-semibold text-lg md:text-xl ${isDarkMode ? 'text-white' : 'text-[#18181B]'}`}>{partner.name}</span>
+                <span className={`font-semibold text-lg md:text-xl ${isDarkMode ? 'text-white' : 'text-[#18181B]'} text-base sm:text-lg md:text-xl`}>{partner.name}</span>
               </div>
             ))}
           </div>

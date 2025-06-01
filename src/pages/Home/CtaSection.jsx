@@ -9,7 +9,7 @@ const CtaSection = () => {
           className="rounded-[30px] bg-gradient-to-r from-black to-[#0f9d8e] p-20"
         >
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-5xl font-extrabold text-white leading-tight mb-8 font-cairo">
+            <h2 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-8 font-cairo">
               We are here to provide diverse technical solutions and consultations to meet your needs.
             </h2>
             

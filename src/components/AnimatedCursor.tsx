@@ -11,6 +11,18 @@ const AnimatedCursor: React.FC = () => {
   const outerRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const [cursorState, setCursorState] = useState<'default' | 'pointer' | 'grabbing' | 'hidden'>('default');
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   // Mouse move tracking
   useEffect(() => {
@@ -95,7 +107,7 @@ const AnimatedCursor: React.FC = () => {
     window.addEventListener('mouseenter', show);
     return () => {
       window.removeEventListener('mouseleave', hide);
-      window.removeEventListener('mouseenter', show);
+      window.addEventListener('mouseenter', show);
     };
   }, []);
 
@@ -119,6 +131,12 @@ const AnimatedCursor: React.FC = () => {
     outerBorder = 'none';
     outerColor = 'transparent';
     innerColor = 'transparent';
+  }
+
+  // Hide cursor on small screens
+  if (windowWidth < 768) {
+    outerScale = 0;
+    innerScale = 0;
   }
 
   return (
