@@ -28,7 +28,7 @@ const HomePage = () => {
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-6xl font-extrabold text-text-light dark:text-white mb-6 leading-tight font-cairo transition-colors text-center">
-  We transform All{" "}
+  We transform{" "}
   <span className="relative inline-block">
     <span className="relative z-10">ideas</span>
     <span className="absolute left-0 bottom-0 w-full h-1 bg-teal-400"></span>
