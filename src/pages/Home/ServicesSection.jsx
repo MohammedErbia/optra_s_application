@@ -13,7 +13,7 @@ const ServicesSection = () => {
     <section className="bg-background-light dark:bg-optra-darkGray py-20 transition-colors">
       <div className="container mx-auto px-6">
         <div className="mb-12">
-          <h2 className="text-5xl font-extrabold text-text-light dark:text-white leading-tight mb-8 font-cairo transition-colors sm:text-3xl md:text-4xl lg:text-5xl">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-text-light dark:text-white leading-tight mb-8 font-cairo transition-colors">
             <span className="text-optra-green">Quality</span> you can rely on, in services 
             <span className="block">you truly deserve</span>
           </h2>

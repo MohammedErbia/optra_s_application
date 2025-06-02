@@ -53,7 +53,7 @@ const Header = () => {
   const handleLanguageToggle = () => {
     setLanguage(prev => {
       const next = prev === 'en' ? 'ar' : 'en';
-      console.log('Language switched to', next);
+      // console.log('Language switched to', next);
       return next;
     });
   };

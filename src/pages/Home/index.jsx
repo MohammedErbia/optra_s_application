@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Header from '../../components/common/Header';
 import Footer from '../../components/common/Footer';
 import PartnersSection from './PartnersSection';
@@ -8,12 +8,34 @@ import ServicesSection from './ServicesSection';
 import ProjectsSection from './ProjectsSection';
 import TestimonialsSection from './TestimonialsSection';
 import CtaSection from './CtaSection';
+import gsap from 'gsap';
 
 const HomePage = () => {
+  const imageRef = useRef(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
      
+  useEffect(() => {
+    if (imageRef.current) {
+      gsap.to(imageRef.current, {
+        x: -80, // Move 100 pixels horizontally
+        duration: 8, // Animation duration in seconds (slow)
+        repeat: -1, // Repeat indefinitely
+        yoyo: true, // Go back and forth
+        ease: "sine.inOut" // Smooth easing
+      });
+    }
+
+    // Cleanup function to kill the animation on component unmount
+    return () => {
+      if (imageRef.current) {
+        gsap.killTweensOf(imageRef.current);
+      }
+    };
+  }, []); // Empty dependency array ensures this effect runs only once
+
 
   return (
     <div className="bg-background-light dark:bg-optra-black min-h-screen transition-colors">
@@ -30,21 +52,22 @@ const HomePage = () => {
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-text-light dark:text-white mb-6 leading-tight font-cairo transition-colors text-center">
   We transform{" "}
   <span className="relative inline-block">
-    <span className="relative z-10">ideas</span>
+    <span className="relative z-10">ideas </span>
     <span className="absolute left-0 bottom-0 w-full h-1 bg-teal-400"></span>
   </span>{" "}
-  into
-  <br className="sm:hidden"/>
-  digital{" "}
+  <span>into </span>
+  <br />
+   digital{" "}
   <span className="relative inline-block">
     <span className="relative z-10">Solutions</span>
     <span className="absolute left-0 bottom-0 w-full h-1 bg-teal-400"></span>
   </span>
 </h1>
+<br />
 
             
             <p className="text-lg text-text-light dark:text-white mb-10 font-cairo transition-colors sm:text-base md:text-lg">
-              A passionate collective of creatives, designers, and developers, committed to <br className="sm:hidden"/>
+              A passionate collective of creatives, designers, and developers, committed to <br className="hidden md:block"/>
               making a real impact in digital development.
             </p>
             
@@ -67,7 +90,7 @@ const HomePage = () => {
         </div>
         
         <div className="absolute bottom-0 right-0 z-0 hidden md:block">
-          <img src="/images/img_export_2.png" alt="Device Mockup" className="h-[414px] w-[414px]" />
+          <img ref={imageRef} src="/images/img_export_2.png" alt="Device Mockup" className="h-[414px] w-[414px]" />
         </div>
       </section>
       

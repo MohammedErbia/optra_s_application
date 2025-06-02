@@ -16,8 +16,8 @@ const ProjectsSection = () => {
             Our Work
           </div>
           <br />
-          <h2 className="text-4xl md:text-6xl font-extrabold leading-tight font-cairo text-text-light dark:text-white transition-colors text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
-            Experience the story behind our <br className="sm:hidden"/>
+          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight font-cairo text-text-light dark:text-white transition-colors">
+            Experience the story behind our <br/>
             <span className="text-optra-green">creative projects</span>
           </h2>
         </div>

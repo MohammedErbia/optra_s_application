@@ -31,7 +31,7 @@ const AboutSection = () => {
 
           
           <div>
-            <h2 className="text-5xl font-extrabold text-optra-green mb-6 font-cairo sm:text-3xl md:text-4xl lg:text-5xl">
+            <h2 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-extrabold text-optra-green mb-6 font-cairo">
               About optra
             </h2>
             <p className="text-lg leading-9 text-text-light dark:text-white font-cairo transition-colors sm:text-base md:text-lg">

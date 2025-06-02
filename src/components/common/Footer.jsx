@@ -15,20 +15,17 @@ const Footer = () => {
               IT solutions Agency company founded in 2024, specializing in integrated software solutions that help businesses digitally transform and improve operational efficiency through custom-designed systems
             </p>
             
-            <div className="flex space-x-4">
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
-                <img src="/images/img_icon_jamicons_outline_logos_youtube.svg" alt="YouTube" className="w-6 h-6 w-5 h-5 sm:w-6 sm:h-6" />
-              </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+            <div className="flex space-x-4"> 
+              <a href="https://www.facebook.com/optraagency" target="_blank" rel="noopener noreferrer">
                 <img src="/images/img_icon_jamicons_outline_logos_facebook.svg" alt="Facebook" className="w-6 h-6 w-5 h-5 sm:w-6 sm:h-6" />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://x.com/Agency_Optra" target="_blank" rel="noopener noreferrer">
                 <img src="/images/img_icon_jamicons_outline_logos_twitter.svg" alt="Twitter" className="w-6 h-6 w-5 h-5 sm:w-6 sm:h-6" />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.instagram.com/optraagency" target="_blank" rel="noopener noreferrer">
                 <img src="/images/img_icon_jamicons_outline_logos_instagram.svg" alt="Instagram" className="w-6 h-6 w-5 h-5 sm:w-6 sm:h-6" />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.linkedin.com/in/optraagency" target="_blank" rel="noopener noreferrer">
                 <img src="/images/img_icon_jamicons_outline_logos_linkedin.svg" alt="LinkedIn" className="w-6 h-6 w-5 h-5 sm:w-6 sm:h-6" />
               </a>
             </div>

@@ -41,7 +41,7 @@ const MissionSection = () => {
     <section ref={sectionRef} className="bg-background-light dark:bg-optra-black py-20 transition-colors">
       <div className="container mx-auto px-6">
         <div className="mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-extrabold text-text-light dark:text-white leading-tight max-w-3xl font-cairo transition-colors">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-text-light dark:text-white leading-tight max-w-3xl font-cairo transition-colors">
             Delve into our mission and our dedication to <span className="text-optra-green">elevating development</span>
           </h2>
         </div>

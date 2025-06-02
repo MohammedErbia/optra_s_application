@@ -58,7 +58,7 @@ const TestimonialsSection = () => {
 
     // Only start the animation if visible, data is loaded, and there are items
     if (isVisible && testimonials && testimonials.length > 0 && visibleTestimonials.length > 0) {
-      console.log('Starting highlight animation', visibleTestimonials.length);
+      // console.log('Starting highlight animation', visibleTestimonials.length);
       const delay = 600; // Delay before starting the sequence
       const itemHighlightDuration = 1000; // Duration each item is highlighted
       const interval = itemHighlightDuration + 100; // Interval between highlights
@@ -103,8 +103,8 @@ const TestimonialsSection = () => {
     <section ref={sectionRef} className={`${isDarkMode ? 'bg-optra-darkGray' : 'bg-gray-50'} py-20 transition-colors`}>
       <div className="container mx-auto px-6">
         <div className="mb-12">
-          <h2 className={`text-5xl font-extrabold ${isDarkMode ? 'text-white' : 'text-gray-900'} leading-tight mb-6 font-roboto sm:text-3xl md:text-4xl lg:text-5xl`}>
-            What Our <span className="text-optra-green">Clients Say</span> About Us
+          <h2 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold ${isDarkMode ? 'text-white' : 'text-gray-900'} leading-tight mb-6 font-roboto`}>
+            What Our <span className="text-optra-green">Clients Say</span><br/> About Us
           </h2>
           <p className={`text-xl ${isDarkMode ? 'text-white' : 'text-gray-600'} max-w-3xl font-roboto sm:text-base md:text-lg`}>
             We are proud that our clients' experiences genuinely reflect the excellence of our digital services
