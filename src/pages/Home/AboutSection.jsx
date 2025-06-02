@@ -5,26 +5,26 @@ const AboutSection = () => {
     <section className="bg-background-light dark:bg-optra-black py-20 transition-colors">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-  <div className="mt-8 md:mt-12">
+        <div className="relative flex flex-row gap-4 justify-center items-center sm:grid sm:grid-cols-2 md:grid md:grid-cols-3">
+  <div className="sm:mt-8 md:mt-12">
     <img 
       src="/images/img_picture.png" 
       alt="Team member" 
-      className="w-full h-auto rounded-[20px] sm:w-auto sm:h-48 md:h-56 lg:h-auto"
+      className="w-24 h-24 rounded-[20px] object-cover sm:w-auto sm:h-48 md:h-56 lg:h-auto"
     />
   </div>
-  <div className="mt-0 md:-mt-4">
+  <div className="sm:mt-0 md:-mt-4">
     <img 
       src="/images/img_picture_384x189.png" 
       alt="Team member" 
-      className="w-full h-auto rounded-[20px] sm:w-auto sm:h-48 md:h-56 lg:h-auto"
+      className="w-24 h-24 rounded-[20px] object-cover sm:w-auto sm:h-48 md:h-56 lg:h-auto"
     />
   </div>
-  <div className="mt-8 md:mt-12">
+  <div className="sm:mt-8 md:mt-12">
     <img 
       src="/images/img_picture_1.png" 
       alt="Team member" 
-      className="w-full h-auto rounded-[20px] sm:w-auto sm:h-48 md:h-56 lg:h-auto"
+      className="w-24 h-24 rounded-[20px] object-cover sm:w-auto sm:h-48 md:h-56 lg:h-auto"
     />
   </div>
 </div>

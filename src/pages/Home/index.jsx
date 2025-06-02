@@ -48,16 +48,16 @@ const HomePage = () => {
               making a real impact in digital development.
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-row items-center justify-center gap-4 sm:flex-row">
               <button 
-                className="bg-optra-green border-2 border-optra-darkGreen text-white px-8 py-4 rounded-lg font-medium text-xl font-roboto hover:bg-opacity-90 transition-colors"
+                className="bg-optra-green border-2 border-optra-darkGreen text-white px-4 py-2 rounded-lg font-medium text-base font-roboto hover:bg-opacity-90 transition-colors sm:px-8 sm:py-4 sm:text-xl"
                 onClick={() => window.location.href = '/apply'}
               >
                 Apply now
               </button>
               
               <button 
-                className="border-2 border-text-light dark:border-white text-text-light dark:text-white px-8 py-4 rounded-lg font-medium text-xl font-roboto hover:bg-gray-100 dark:hover:bg-optra-darkGray transition-colors"
+                className="border-2 border-text-light dark:border-white text-text-light dark:text-white px-4 py-2 rounded-lg font-medium text-base font-roboto hover:bg-gray-100 dark:hover:bg-optra-darkGray transition-colors sm:px-8 sm:py-4 sm:text-xl"
                 onClick={() => window.location.href = '/works'}
               >
                 View works
