@@ -12,8 +12,8 @@ const PartnersSection = () => {
   const scrollRef = useRef(null);
   const itemsRef = useRef([]);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [paused, setPaused] = useState(false);
   const [hoveredIdx, setHoveredIdx] = useState(null);
+  const scrollTweenRef = useRef(null);
 
   // GSAP fade/slide-in animation for each partner item
   useEffect(() => {
@@ -45,52 +45,72 @@ const PartnersSection = () => {
     if (!scrollRef.current || !partners?.length) return;
     let ctx = gsap.context(() => {
       const el = scrollRef.current;
-      let scrollTween;
-      function startScroll() {
-        const scrollWidth = el.scrollWidth / 2;
-        scrollTween = gsap.to(el, {
-          scrollLeft: scrollWidth,
-          duration: 40, // slower scroll
-          ease: 'none',
-          repeat: -1,
-          modifiers: {
-            scrollLeft: (value) => {
-              if (parseFloat(value) >= scrollWidth) {
-                el.scrollLeft = 0;
-                return 0;
-              }
-              return value;
-            },
+      const scrollWidth = el.scrollWidth / 2;
+      scrollTweenRef.current = gsap.to(el, {
+        scrollLeft: scrollWidth,
+        duration: 40, // slower scroll
+        ease: 'none',
+        repeat: -1,
+        modifiers: {
+          scrollLeft: (value) => {
+            if (parseFloat(value) >= scrollWidth) {
+              el.scrollLeft = 0;
+              return 0;
+            }
+            return value;
           },
-        });
-      }
-      if (!paused) startScroll();
-      return () => {
-        if (scrollTween) scrollTween.kill();
-      };
+        },
+      });
     }, scrollRef);
     return () => ctx.revert();
-  }, [paused, partners]);
+  }, [partners]);
 
-  // Scale animation for items on hover/focus
+  // Scale animation for items on hover/focus and pause/resume scroll
   const handleItemMouseEnter = (idx) => {
     setHoveredIdx(idx);
     if (itemsRef.current[idx]) {
       gsap.to(itemsRef.current[idx], { scale: 1.2, zIndex: 10, duration: 0.3, ease: 'power2.out' });
     }
+    // Pause scrolling on item hover/focus
+    if (scrollTweenRef.current) {
+      scrollTweenRef.current.pause();
+    }
   };
+
   const handleItemMouseLeave = (idx) => {
     setHoveredIdx(null);
     if (itemsRef.current[idx]) {
       gsap.to(itemsRef.current[idx], { scale: 1, zIndex: 1, duration: 0.3, ease: 'power2.out' });
     }
+    // Resume scrolling on item mouse leave/blur, but only if the scroll area is not also hovered/focused
+    if (scrollTweenRef.current && !scrollRef.current.matches(':hover') && document.activeElement !== scrollRef.current) {
+         scrollTweenRef.current.resume();
+    }
   };
 
   // Pause/resume scroll when mouse enters/leaves the scroll area
-  const handleScrollAreaMouseEnter = () => setPaused(true);
-  const handleScrollAreaMouseLeave = () => setPaused(false);
-  const handleScrollAreaFocus = () => setPaused(true);
-  const handleScrollAreaBlur = () => setPaused(false);
+  const handleScrollAreaMouseEnter = () => {
+    if (scrollTweenRef.current) {
+      scrollTweenRef.current.pause();
+    }
+  };
+  const handleScrollAreaMouseLeave = () => {
+    // Resume scrolling when mouse leaves scroll area, but only if no item is currently hovered/focused
+    if (scrollTweenRef.current && hoveredIdx === null && !scrollRef.current.contains(document.activeElement)) {
+       scrollTweenRef.current.resume();
+    }
+  };
+  const handleScrollAreaFocus = () => {
+     if (scrollTweenRef.current) {
+      scrollTweenRef.current.pause();
+    }
+  };
+  const handleScrollAreaBlur = () => {
+     // Resume scrolling when scroll area loses focus, but only if no item is currently hovered/focused
+     if (scrollTweenRef.current && hoveredIdx === null && !scrollRef.current.contains(document.activeElement)) {
+       scrollTweenRef.current.resume();
+    }
+  };
 
   // Show scroll-to-top button
   useEffect(() => {
@@ -119,7 +139,7 @@ const PartnersSection = () => {
         <div className="flex justify-start">
           <div
             ref={scrollRef}
-            className="flex flex-nowrap gap-12 md:gap-16 overflow-x-auto scrollbar-none px-2 md:px-8 py-4 w-full"
+            className="flex flex-nowrap gap-0 md:gap-16 overflow-x-auto scrollbar-none px-2 md:px-8 py-4 w-full"
             tabIndex={0}
             style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             aria-label="Partner companies logos and names"
@@ -132,7 +152,7 @@ const PartnersSection = () => {
               <div
                 key={idx + partner.id}
                 ref={el => itemsRef.current[idx] = el}
-                className="partner-item flex flex-row items-center min-w-[200px] md:min-w-[240px] mx-2 gap-4 opacity-0"
+                className="partner-item flex flex-row items-center min-w-[200px] md:min-w-[240px] gap-0 md:gap-4 opacity-0"
                 tabIndex={0}
                 aria-label={partner.name}
                 onMouseEnter={() => handleItemMouseEnter(idx)}
@@ -144,8 +164,9 @@ const PartnersSection = () => {
                 <img
                   src={partner.logo_image}
                   alt={partner.name}
-                  className="h-12 w-auto max-w-[120px] object-contain h-8 sm:h-10 md:h-12 w-auto max-w-[80px] sm:max-w-[100px] md:max-w-[120px]"
+                  className="h-10 w-auto max-w-[120px] object-contain h-8 sm:h-10 md:h-12 w-auto max-w-[80px] sm:max-w-[100px] md:max-w-[120px]"
                   draggable="false"
+                  style={{ filter: isDarkMode ? 'drop-shadow(0 0 1px rgba(255,255,255,0.3))': 'drop-shadow(0 0 1px rgba(0,0,0,0.2))', transition: 'filter 0.3s ease-in-out' }}
                 />
                 <span className={`font-semibold text-lg md:text-xl ${isDarkMode ? 'text-white' : 'text-[#18181B]'} text-base sm:text-lg md:text-xl`}>{partner.name}</span>
               </div>

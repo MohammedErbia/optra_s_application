@@ -9,9 +9,11 @@ import ProjectsSection from './ProjectsSection';
 import TestimonialsSection from './TestimonialsSection';
 import CtaSection from './CtaSection';
 import gsap from 'gsap';
+import { useTheme } from '../../context/ThemeContext';
 
 const HomePage = () => {
   const imageRef = useRef(null);
+  const { isDarkMode } = useTheme();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -90,7 +92,13 @@ const HomePage = () => {
         </div>
         
         <div className="absolute bottom-0 right-0 z-0 hidden md:block">
-          <img ref={imageRef} src="/images/img_export_2.png" alt="Device Mockup" className="h-[414px] w-[414px]" />
+          <img 
+            ref={imageRef} 
+            src="/images/img_export_2.png" 
+            alt="Device Mockup" 
+            className="h-[414px] w-[414px]"
+            style={{ filter: isDarkMode ? 'drop-shadow(-20px 15px 40px rgba(255, 255, 255, 0.2))' : 'drop-shadow(-20px 15px 40px rgba(0, 0, 0, 0.7))' }}
+          />
         </div>
       </section>
       

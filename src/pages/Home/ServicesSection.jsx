@@ -24,7 +24,8 @@ const ServicesSection = () => {
         </div>
         
 
-        <div className="flex overflow-x-auto flex-nowrap gap-6 px-2 md:grid md:grid-cols-2 md:gap-8 lg:grid-cols-3 lg:gap-8 md:scrollbar-none">
+        <div className="flex overflow-x-auto flex-nowrap gap-6 px-2 md:grid md:grid-cols-2 md:gap-8 lg:grid-cols-3 lg:gap-8 md:scrollbar-none md:overflow-y-hidden"
+             style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {services.map((service) => (
             <div
               key={service.id}
