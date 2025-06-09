@@ -7,8 +7,8 @@ const navItems = [
   { label: 'Home', path: '/' },
   { label: 'Why Optra?', path: '/who-we-are', dropdown: [
     { label: 'Who We Are', path: '/who-we-are' },
-    { label: 'Vision', path: '/vision' },
-    { label: 'Mission', path: '/mission' },
+    { label: 'Vision', path: '/who-we-are' },
+    { label: 'Mission', path: '/who-we-are' },
     { label: 'FAQ', path: '/faq' },
     { label: 'Team', path: '/team' },
   ] },
@@ -32,6 +32,7 @@ const Header = () => {
   const location = useLocation();
   const navRef = useRef();
   const sideMenuRef = useRef();
+  const dropdownTimeoutRef = useRef(null); // Ref to store timeout ID
 
   // Handle nav underline
   const getActiveIndex = () => {
@@ -45,9 +46,17 @@ const Header = () => {
   };
   const activeIdx = getActiveIndex();
 
-  // Dropdown hover logic
-  const handleDropdownEnter = (idx) => setOpenDropdown(idx);
-  const handleDropdownLeave = () => setOpenDropdown(null);
+  // Dropdown hover logic with delay
+  const handleDropdownEnter = (idx) => {
+    clearTimeout(dropdownTimeoutRef.current);
+    setOpenDropdown(idx);
+  };
+
+  const handleDropdownLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 200); // 200ms delay before closing (adjust as needed)
+  };
 
   // Language toggle
   const handleLanguageToggle = () => {
@@ -95,13 +104,17 @@ const Header = () => {
                 )}
               </Link>
               {item.dropdown && openDropdown === idx && (
-                <div className="absolute top-full left-0 mt-2 w-56 bg-background-light dark:bg-optra-black border border-border-light dark:border-[#2c2c2c] rounded-md shadow-lg py-2 z-10 animate-fade-in">
+                <div 
+                  className="absolute top-full left-0 mt-2 w-56 bg-background-light dark:bg-optra-black border border-border-light dark:border-[#2c2c2c] rounded-md shadow-lg py-2 z-10 animate-fade-in"
+                  onMouseEnter={() => clearTimeout(dropdownTimeoutRef.current)} // Keep open when hovering dropdown
+                  onMouseLeave={handleDropdownLeave} // Set timeout to close when leaving dropdown
+                >
                   {item.dropdown.map(sub => (
                     <Link
                       key={sub.path}
                       to={sub.path}
                       className="block px-4 py-2 text-text-light dark:text-white hover:bg-gray-100 dark:hover:bg-optra-darkGray"
-                      onClick={closeMenu}
+                      onClick={() => setOpenDropdown(null)} // Close dropdown on link click
                     >
                       {sub.label}
                     </Link>
@@ -174,7 +187,7 @@ const Header = () => {
                           key={sub.path}
                           to={sub.path}
                           className="block text-text-light dark:text-white text-base font-cairo hover:text-optra-green transition-colors"
-                          onClick={closeMenu}
+                          onClick={closeMenu} // Close mobile menu and dropdown on link click
                         >
                           {sub.label}
                         </Link>

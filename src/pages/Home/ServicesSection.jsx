@@ -30,7 +30,7 @@ const ServicesSection = () => {
             <div
               key={service.id}
               className="flex-shrink-0 w-64 h-full border border-gray-200 dark:border-[#23232b] rounded-xl bg-background-light dark:bg-[#18181B] transition-transform transition-shadow duration-300 hover:scale-105 hover:shadow-xl group md:w-auto md:flex-shrink w-72 h-96 md:h-auto"
-              style={{ minHeight: 280 }}
+              style={{ minHeight: 300 }}
             >
               <Card
                 title={service.title}

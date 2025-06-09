@@ -3,6 +3,9 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Import page components
 import HomePage from './pages/Home';
+import WhoWeArePage from './pages/WhoWeArePage';
+import FaqPage from './pages/FaqPage';
+import TeamPage from './pages/TeamPage';
 
 const NotFound = () => (
   <div className="min-h-screen flex flex-col items-center justify-center bg-[#0F0F13] text-white">
@@ -25,6 +28,9 @@ const AppRoutes = () => {
     }}>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/who-we-are" element={<WhoWeArePage />} />
+        <Route path="/faq" element={<FaqPage />} />
+        <Route path="/team" element={<TeamPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
