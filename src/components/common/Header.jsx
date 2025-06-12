@@ -40,6 +40,10 @@ const Header = () => {
       if (item.dropdown) {
         return item.dropdown.some(sub => location.pathname.startsWith(sub.path));
       }
+      // Special handling for blog pages: highlight 'Blog' if path starts with '/blog'
+      if (item.path === '/blog') {
+        return location.pathname.startsWith('/blog');
+      }
       return location.pathname === item.path;
     });
     return idx === -1 ? 0 : idx;
@@ -109,9 +113,9 @@ const Header = () => {
                   onMouseEnter={() => clearTimeout(dropdownTimeoutRef.current)} // Keep open when hovering dropdown
                   onMouseLeave={handleDropdownLeave} // Set timeout to close when leaving dropdown
                 >
-                  {item.dropdown.map(sub => (
+                  {item.dropdown.map((sub, subIdx) => (
                     <Link
-                      key={sub.path}
+                      key={`${sub.path}-${subIdx}`}
                       to={sub.path}
                       className="block px-4 py-2 text-text-light dark:text-white hover:bg-gray-100 dark:hover:bg-optra-darkGray"
                       onClick={() => setOpenDropdown(null)} // Close dropdown on link click
@@ -182,9 +186,9 @@ const Header = () => {
                   )}
                   {item.dropdown && openDropdown === item.label && (
                     <div className="ml-4 mt-2 space-y-2">
-                      {item.dropdown.map(sub => (
+                      {item.dropdown.map((sub, subIdx) => (
                         <Link
-                          key={sub.path}
+                          key={`${sub.path}-${subIdx}`}
                           to={sub.path}
                           className="block text-text-light dark:text-white text-base font-cairo hover:text-optra-green transition-colors"
                           onClick={closeMenu} // Close mobile menu and dropdown on link click
