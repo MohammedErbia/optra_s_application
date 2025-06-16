@@ -2,12 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <footer className="bg-background-light dark:bg-optra-black pt-12 border-t border-gray-200 dark:border-[#2c2c2c] transition-colors">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1">
-            <Link to="/">
+            <Link to="/" onClick={scrollToTop}>
               <img src="/images/img_logo.svg" alt="Optra Logo" className="h-[45px] w-[209px] mb-6 h-8 w-auto sm:h-10 md:h-[45px]"
             />
             </Link>
@@ -35,27 +39,27 @@ const Footer = () => {
             <h3 className="text-text-light dark:text-white text-base font-medium mb-4 capitalize font-cairo transition-colors sm:text-sm md:text-base">Services</h3>
             <ul className="space-y-4">
               <li>
-                <Link to="/custom-software" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green font-roboto transition-colors text-sm sm:text-base">
+                <Link to="/custom-software" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   Custom Software Solutions
                 </Link>
               </li>
               <li>
-                <Link to="/app-development" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green font-roboto transition-colors text-sm sm:text-base">
+                <Link to="/app-development" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   App Development
                 </Link>
               </li>
               <li>
-                <Link to="/technical-services" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green font-roboto transition-colors text-sm sm:text-base">
+                <Link to="/technical-services" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   Technical Services
                 </Link>
               </li>
               <li>
-                <Link to="/ecommerce-solutions" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green font-roboto transition-colors text-sm sm:text-base">
+                <Link to="/ecommerce-solutions" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   E-commerce Solutions
                 </Link>
               </li>
               <li>
-                <Link to="/website-design" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green font-roboto transition-colors text-sm sm:text-base">
+                <Link to="/website-design" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   Website Design
                 </Link>
               </li>
@@ -66,32 +70,32 @@ const Footer = () => {
             <h3 className="text-text-light dark:text-white text-base font-medium mb-4 capitalize font-cairo transition-colors sm:text-sm md:text-base">Why Optra?</h3>
             <ul className="space-y-4">
               <li>
-                <Link to="/who-we-are" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green lowercase font-roboto transition-colors text-sm sm:text-base">
+                <Link to="/who-we-are" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green lowercase font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   Who We Are
                 </Link>
               </li>
               <li>
-                <Link to="/who-we-are" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green font-roboto transition-colors text-sm sm:text-base">
+                <Link to="/who-we-are" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   Vision
                 </Link>
               </li>
               <li>
-                <Link to="/who-we-are" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green font-roboto transition-colors text-sm sm:text-base">
+                <Link to="/who-we-are" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   Mission
                 </Link>
               </li>
               <li>
-                <Link to="/faq" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green font-roboto transition-colors text-sm sm:text-base">
+                <Link to="/faq" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   Frequently Asked Questions (FAQ)
                 </Link>
               </li>
               <li>
-                <Link to="/blog" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green font-roboto transition-colors text-sm sm:text-base">
+                <Link to="/blog" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   Blog
                 </Link>
               </li>
               <li>
-                <Link to="/team" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green font-roboto transition-colors text-sm sm:text-base">
+                <Link to="/team" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   Team
                 </Link>
               </li>

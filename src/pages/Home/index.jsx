@@ -10,6 +10,7 @@ import TestimonialsSection from './TestimonialsSection';
 import CtaSection from './CtaSection';
 import gsap from 'gsap';
 import { useTheme } from '../../context/ThemeContext';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const imageRef = useRef(null);
@@ -74,12 +75,13 @@ const HomePage = () => {
             </p>
             
             <div className="flex flex-row items-center justify-center gap-4 sm:flex-row">
-              <button 
-                className="bg-optra-green border-2 border-optra-darkGreen text-white px-4 py-2 rounded-lg font-medium text-base font-roboto hover:bg-opacity-90 transition-colors sm:px-8 sm:py-4 sm:text-xl"
-                onClick={() => window.location.href = '/apply'}
-              >
-                Apply now
-              </button>
+              <Link to="/apply">
+                <button 
+                  className="bg-optra-green border-2 border-optra-darkGreen text-white px-4 py-2 rounded-lg font-medium text-base font-roboto hover:bg-opacity-90 transition-colors sm:px-8 sm:py-4 sm:text-xl"
+                >
+                  Apply now
+                </button>
+              </Link>
               
               <button 
                 className="border-2 border-text-light dark:border-white text-text-light dark:text-white px-4 py-2 rounded-lg font-medium text-base font-roboto hover:bg-gray-100 dark:hover:bg-optra-darkGray transition-colors sm:px-8 sm:py-4 sm:text-xl"
@@ -96,8 +98,8 @@ const HomePage = () => {
             ref={imageRef} 
             src={isDarkMode ? '/images/img_export_2.png' : '/images/export-2.png'} 
             alt="Device Mockup" 
-            className="h-[414px] w-[414px]"
-            style={{ filter: isDarkMode ? 'drop-shadow(-20px 15px 100px rgba(255, 255, 255, 0.2))' : 'drop-shadow(-20px 15px 90px rgba(0, 0, 0, 0.2))' }}
+            className="h-[494px] w-[494px]"
+            style={{ filter: isDarkMode ? 'drop-shadow(-20px 15px 100px rgba(255, 255, 255, 0.2))' : 'drop-shadow(-20px 15px 90px rgba(0, 0, 0, 0.05))' }}
           />
         </div>
       </section>

@@ -205,7 +205,7 @@ const BlogDetailsPage = () => {
                 </span>
               )}
             </div>
-          </div>
+          </div>  
 
           {blogPost.cover_image_url && blogPost.show_cover_image && (
             <img src={blogPost.cover_image_url} alt={blogPost.title} className="w-full h-auto rounded-lg mb-8 object-cover max-h-[400px]" />

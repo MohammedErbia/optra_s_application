@@ -139,13 +139,15 @@ const Header = () => {
             <img src="/images/img_translate.svg" alt="Language" className="w-6 h-6 mr-1" />
             {language === 'en' ? 'عربي' : 'English'}
           </button>
-          <Button
-            variant="primary"
-            className="h-12 rounded-lg"
-            icon={<img src="/images/img_icon_jamicons_outline_logos_arrowright.svg" alt="Arrow" className="w-6 h-6" />}
-          >
-            Apply now
-          </Button>
+          <Link to="/apply">
+            <Button
+              variant="primary"
+              className="h-12 rounded-lg"
+              icon={<img src="/images/img_icon_jamicons_outline_logos_arrowright.svg" alt="Arrow" className="w-6 h-6" />}
+            >
+              Apply now
+            </Button>
+          </Link>
         </div>
 
         <div className="md:hidden flex items-center">
@@ -211,14 +213,16 @@ const Header = () => {
                 <img src="/images/img_translate.svg" alt="Language" className="w-6 h-6 mr-1" />
                 {language === 'en' ? 'عربي' : 'English'}
               </button>
-              <Button
-                variant="primary"
-                className="h-12 rounded-lg w-full"
-                icon={<img src="/images/img_icon_jamicons_outline_logos_arrowright.svg" alt="Arrow" className="w-6 h-6" />}
-                 onClick={() => {window.location.href = '/apply'; closeMenu();}}
-              >
-                Apply now
-              </Button>
+              <Link to="/apply">
+                <Button
+                  variant="primary"
+                  className="h-12 rounded-lg w-full"
+                  icon={<img src="/images/img_icon_jamicons_outline_logos_arrowright.svg" alt="Arrow" className="w-6 h-6" />}
+                   onClick={() => {window.location.href = '/apply'; closeMenu();}}
+                >
+                  Apply now
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

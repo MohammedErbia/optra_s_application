@@ -8,6 +8,7 @@ import FaqPage from './pages/FaqPage';
 import TeamPage from './pages/TeamPage';
 import BlogPage from './pages/BlogPage';
 import BlogDetailsPage from './pages/BlogDetailsPage';
+import ApplyNowPage from './pages/ApplyNowPage';
 
 const NotFound = () => (
   <div className="min-h-screen flex flex-col items-center justify-center bg-[#0F0F13] text-white">
@@ -35,6 +36,7 @@ const AppRoutes = () => {
         <Route path="/team" element={<TeamPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:slug" element={<BlogDetailsPage />} />
+        <Route path="/apply" element={<ApplyNowPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
