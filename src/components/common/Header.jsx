@@ -44,6 +44,10 @@ const Header = () => {
       if (item.path === '/blog') {
         return location.pathname.startsWith('/blog');
       }
+      // Special handling for careers pages: highlight 'Careers' if path starts with '/careers'
+      if (item.path === '/careers') {
+        return location.pathname.startsWith('/careers');
+      }
       return location.pathname === item.path;
     });
     return idx === -1 ? 0 : idx;

@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import FacebookIcon from '../icons/FacebookIcon';
+import TwitterIcon from '../icons/TwitterIcon';
+import LinkedInIcon from '../icons/LinkedInIcon';
+import InstagramIcon from '../icons/InstagramIcon';
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -20,17 +24,17 @@ const Footer = () => {
             </p>
             
             <div className="flex space-x-4"> 
-              <a href="https://www.facebook.com/optraagency" target="_blank" rel="noopener noreferrer">
-                <img src="/images/img_icon_jamicons_outline_logos_facebook.svg" alt="Facebook" className="w-6 h-6 w-5 h-5 sm:w-6 sm:h-6" />
+              <a href="https://www.facebook.com/optraagency" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-optra-green dark:text-optra-lightGray dark:hover:text-optra-green transition-colors">
+                <FacebookIcon className="w-6 h-6 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />
               </a>
-              <a href="https://x.com/Agency_Optra" target="_blank" rel="noopener noreferrer">
-                <img src="/images/img_icon_jamicons_outline_logos_twitter.svg" alt="Twitter" className="w-6 h-6 w-5 h-5 sm:w-6 sm:h-6" />
+              <a href="https://x.com/Agency_Optra" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-optra-green dark:text-optra-lightGray dark:hover:text-optra-green transition-colors">
+                <TwitterIcon className="w-6 h-6 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />
               </a>
-              <a href="https://www.instagram.com/optraagency" target="_blank" rel="noopener noreferrer">
-                <img src="/images/img_icon_jamicons_outline_logos_instagram.svg" alt="Instagram" className="w-6 h-6 w-5 h-5 sm:w-6 sm:h-6" />
+              <a href="https://www.instagram.com/optraagency" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-optra-green dark:text-optra-lightGray dark:hover:text-optra-green transition-colors">
+                <InstagramIcon className="w-6 h-6 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />
               </a>
-              <a href="https://www.linkedin.com/in/optraagency" target="_blank" rel="noopener noreferrer">
-                <img src="/images/img_icon_jamicons_outline_logos_linkedin.svg" alt="LinkedIn" className="w-6 h-6 w-5 h-5 sm:w-6 sm:h-6" />
+              <a href="https://www.linkedin.com/in/optraagency" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-optra-green dark:text-optra-lightGray dark:hover:text-optra-green transition-colors">
+                <LinkedInIcon className="w-6 h-6 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />
               </a>
             </div>
           </div>
