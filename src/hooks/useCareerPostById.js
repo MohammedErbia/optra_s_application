@@ -13,7 +13,7 @@ const useCareerPostById = (id) => {
       try {
         const { data, error } = await supabase
           .from('careers')
-          .select('*, helpful_yes_count, helpful_no_count, job_summary')
+          .select('*, helpful_yes_count, helpful_no_count, job_summary, forms')
           .eq('id', id)
           .single();
 

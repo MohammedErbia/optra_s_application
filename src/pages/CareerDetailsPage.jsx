@@ -10,6 +10,7 @@ import FacebookIcon from '../components/icons/FacebookIcon';
 import TwitterIcon from '../components/icons/TwitterIcon';
 import LinkedInIcon from '../components/icons/LinkedInIcon';
 import InstagramIcon from '../components/icons/InstagramIcon';
+import CopyLinkIcon from '../components/icons/CopyLinkIcon';
 
 const CareerDetailsPage = () => {
   const { id } = useParams();
@@ -20,6 +21,7 @@ const CareerDetailsPage = () => {
   const [showFeedback, setShowFeedback] = useState(true);
   const [yesCount, setYesCount] = useState(0);
   const [noCount, setNoCount] = useState(0);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (careerPost) {
@@ -102,6 +104,31 @@ const CareerDetailsPage = () => {
   if (error) return <div className="min-h-screen flex items-center justify-center dark:bg-optra-black"><p className="text-red-500">Error loading job details: {error}</p></div>;
   if (!careerPost) return <div className="min-h-screen flex items-center justify-center dark:bg-optra-black"><p className="text-gray-600 dark:text-optra-lightGray">Job not found.</p></div>;
 
+  const postUrl = `https://optraagency.com/#/careers/${careerPost.id}`;
+  const encodedUrl = encodeURIComponent(postUrl);
+  const postTitle = encodeURIComponent(careerPost.title);
+
+  const socialLinks = [
+    {
+      platform: 'facebook',
+      url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+      icon: <FacebookIcon className="w-8 h-8 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />, 
+      alt: 'Facebook'
+    },
+    {
+      platform: 'twitter',
+      url: `https://twitter.com/intent/tweet?text=${postTitle}&url=${encodedUrl}`,
+      icon: <TwitterIcon className="w-8 h-8 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />, 
+      alt: 'Twitter'
+    },
+    {
+      platform: 'linkedin',
+      url: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${postTitle}`,
+      icon: <LinkedInIcon className="w-8 h-8 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />, 
+      alt: 'LinkedIn'
+    }
+  ];
+
   return (
     <div className="bg-background-light dark:bg-optra-black min-h-screen transition-colors">
       <Header />
@@ -175,9 +202,23 @@ in
 
           {/* Right Column - Job Summary & Share */}
           <div className="lg:col-span-1 bg-gray-100 dark:bg-black p-8 rounded-lg shadow-lg">
-            <Link to="/apply" className="block w-full text-center py-3 px-6 bg-optra-green text-white font-semibold rounded-md hover:bg-green-600 transition-colors mb-8">
-              Apply Now
-            </Link>
+            {careerPost.forms ? (
+              <a
+                href={careerPost.forms}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full text-center py-3 px-6 bg-optra-green text-white font-semibold rounded-md hover:bg-green-600 transition-colors mb-8"
+              >
+                Apply Now
+              </a>
+            ) : (
+              <button
+                className="block w-full text-center py-3 px-6 bg-gray-400 text-white font-semibold rounded-md mb-8 cursor-not-allowed"
+                disabled
+              >
+                Apply Now (Form not available)
+              </button>
+            )}
 
             <h3 className="text-xl font-bold text-text-light dark:text-white mb-6 font-cairo">Job Summary</h3>
             <div className="space-y-4 text-text-light dark:text-optra-lightGray">
@@ -195,44 +236,44 @@ in
             <div className="mt-12">
               <h3 className="text-xl font-bold text-text-light dark:text-white mb-4 font-cairo">Share this:</h3>
               <div className="flex space-x-4">
-                {
-                  careerPost.title && careerPost.id && (() => {
-                    const postUrl = encodeURIComponent(`https://optraagency.com/#/careers/${careerPost.id}`);
-                    const postTitle = encodeURIComponent(careerPost.title);
-                    const socialLinks = [
-                      {
-                        platform: 'facebook',
-                        url: `https://www.facebook.com/share_channel/?type=reshare&link=${postUrl}&app_id=542599432471018&source_surface=external_reshare&display=page&hashtag#&source=social.fb`,
-                        icon: <FacebookIcon className="w-8 h-8 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />,
-                        alt: 'Facebook'
-                      },
-                      {
-                        platform: 'twitter',
-                        url: `https://twitter.com/intent/tweet?text=${postTitle}&url=${postUrl}`,
-                        icon: <TwitterIcon className="w-8 h-8 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />,
-                        alt: 'Twitter'
-                      },
-                      {
-                        platform: 'linkedin',
-                        url: `https://www.linkedin.com/shareArticle?mini=true&url=${postUrl}&title=${postTitle}`,
-                        icon: <LinkedInIcon className="w-8 h-8 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />,
-                        alt: 'LinkedIn'
-                      },
-                      {
-                        platform: 'instagram',
-                        url: `https://www.instagram.com/share?url=${postUrl}`,
-                        icon: <InstagramIcon className="w-8 h-8 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />,
-                        alt: 'Instagram'
+                {socialLinks.map(link => (
+                  <a key={link.platform} href={link.url} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-optra-green dark:text-optra-lightGray dark:hover:text-optra-green transition-colors" aria-label={`Share on ${link.alt}`}>
+                    {link.icon}
+                  </a>
+                ))}
+                {/* Instagram: Copy Link Button */}
+                <button
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(postUrl);
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 1500);
+                    } catch (err) {
+                      // Fallback for iOS/Safari/Mac
+                      try {
+                        const textarea = document.createElement('textarea');
+                        textarea.value = postUrl;
+                        textarea.setAttribute('readonly', '');
+                        textarea.style.position = 'absolute';
+                        textarea.style.left = '-9999px';
+                        document.body.appendChild(textarea);
+                        textarea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textarea);
+                        setCopied(true);
+                        setTimeout(() => setCopied(false), 1500);
+                      } catch (fallbackErr) {
+                        setCopied(false);
                       }
-                    ];
-
-                    return socialLinks.map(link => (
-                      <a key={link.platform} href={link.url} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-optra-green dark:text-optra-lightGray dark:hover:text-optra-green transition-colors">
-                        {link.icon}
-                      </a>
-                    ));
-                  })()
-                }
+                    }
+                  }}
+                  className="text-gray-600 hover:text-optra-green dark:text-optra-lightGray dark:hover:text-optra-green transition-colors flex items-center"
+                  aria-label="Copy link for Instagram"
+                  type="button"
+                >
+                  <CopyLinkIcon className="w-8 h-8 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />
+                  <span className="ml-2 text-sm">{copied ? 'Copied!' : 'Copy Link'}</span>
+                </button>
               </div>
             </div>
           </div>
@@ -241,9 +282,23 @@ in
 
       {/* Apply Now Button at the end of the page */}
       <div className="text-center py-16 dark:bg-[#121212]">
-        <Link to="/apply" className="inline-block py-3 px-12 bg-optra-green text-white font-semibold rounded-md hover:bg-green-600 transition-colors text-lg">
-          Apply Now
-        </Link>
+        {careerPost.forms ? (
+          <a
+            href={careerPost.forms}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block py-3 px-12 bg-optra-green text-white font-semibold rounded-md hover:bg-green-600 transition-colors text-lg"
+          >
+            Apply Now
+          </a>
+        ) : (
+          <button
+            className="inline-block py-3 px-12 bg-gray-400 text-white font-semibold rounded-md text-lg cursor-not-allowed"
+            disabled
+          >
+            Apply Now (Form not available)
+          </button>
+        )}
       </div>
 
       <Footer />

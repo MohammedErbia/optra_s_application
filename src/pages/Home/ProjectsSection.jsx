@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { useWorks } from '../../hooks/useWorks';
 import { Link } from 'react-router-dom';
 
 const ProjectsSection = () => {
   const { works, loading, error } = useWorks();
+  const [filter, setFilter] = useState('All');
+
+  // Get unique project types
+  const projectTypes = useMemo(() => {
+    const types = works.map(w => w["project-type"]).filter(Boolean);
+    return ['All', ...Array.from(new Set(types.map(type => type.trim())))];
+  }, [works]);
+
+  // Filter works by selected type
+  const filteredWorks = filter === 'All' ? works : works.filter(w => w["project-type"] === filter);
 
   if (loading) return <div>Loading projects...</div>;
   if (error) return <div>Error loading projects: {error}</div>;
@@ -22,8 +32,28 @@ const ProjectsSection = () => {
           </h2>
         </div>
 
+        {/* Filter Bar */}
+        <div className="flex justify-center mb-10">
+          <div className="inline-flex rounded-xl bg-gray-200 dark:bg-[#232323] p-1">
+            {projectTypes.map(type => (
+              <button
+                key={type}
+                onClick={() => setFilter(type)}
+                className={`px-6 py-2 rounded-lg font-semibold text-base transition-colors
+                  ${filter === type
+                    ? 'bg-optra-green text-white shadow'
+                    : 'bg-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-[#333]'}
+                `}
+                style={{ minWidth: 80 }}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="flex overflow-x-auto flex-nowrap gap-6 px-2 md:grid md:grid-cols-2 md:gap-8">
-          {works.map((work) => (
+          {filteredWorks.map((work) => (
             <Link 
               key={work.id} 
               to={`/works/${work.slug}`}
