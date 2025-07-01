@@ -166,7 +166,7 @@ const ApplyNowPage = () => {
               {/* Phone Info */}
               <div>
                 <h3 className="text-xl font-semibold text-text-light dark:text-white mb-2 font-cairo">Phone</h3>
-                <p className="text-gray-600 dark:text-optra-lightGray font-roboto">+9701234567654</p>
+                <p className="text-gray-600 dark:text-optra-lightGray font-roboto">+970597776576</p>
                 <p className="text-gray-600 dark:text-optra-lightGray font-roboto">Hours: 5AM – 8PM PT, 7 days a week</p>
               </div>
 

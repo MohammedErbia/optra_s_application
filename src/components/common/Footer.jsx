@@ -115,7 +115,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <img src="/images/img_phone.svg" alt="Phone" className="w-5 h-5 mr-2 w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="text-gray-600 dark:text-[#e0e0e0] text-base font-roboto transition-colors text-sm sm:text-base">+9701234567654</span>
+                <span className="text-gray-600 dark:text-[#e0e0e0] text-base font-roboto transition-colors text-sm sm:text-base">+970597776576</span>
               </li>
               <li className="flex items-center">
                 <img src="/images/img_mail.svg" alt="Email" className="w-5 h-5 mr-2 w-4 h-4 sm:w-5 sm:h-5" />
