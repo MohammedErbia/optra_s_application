@@ -12,7 +12,7 @@ const navItems = [
     { label: 'FAQ', path: '/faq' },
     { label: 'Team', path: '/team' },
   ] },
-  { label: 'Services', path: '/web-development', dropdown: [
+  { label: 'Services', path: '/services', dropdown: [
     { label: 'Web Application Development', path: '/web-development' },
     { label: 'Mobile Application Development', path: '/mobile-development' },
     { label: 'ERP Systems', path: '/erp-systems' },
@@ -38,6 +38,10 @@ const Header = () => {
   const getActiveIndex = () => {
     const idx = navItems.findIndex(item => {
       if (item.dropdown) {
+        // Special handling for services page
+        if (item.path === '/services' && location.pathname === '/services') {
+          return true;
+        }
         return item.dropdown.some(sub => location.pathname.startsWith(sub.path));
       }
       // Special handling for blog pages: highlight 'Blog' if path starts with '/blog'
@@ -120,7 +124,7 @@ const Header = () => {
                   {item.dropdown.map((sub, subIdx) => (
                     <Link
                       key={`${sub.path}-${subIdx}`}
-                      to={sub.path}
+                      to={item.label === 'Services' ? '/services' : sub.path}
                       className="block px-4 py-2 text-text-light dark:text-white hover:bg-gray-100 dark:hover:bg-optra-darkGray"
                       onClick={() => setOpenDropdown(null)} // Close dropdown on link click
                     >
@@ -195,7 +199,7 @@ const Header = () => {
                       {item.dropdown.map((sub, subIdx) => (
                         <Link
                           key={`${sub.path}-${subIdx}`}
-                          to={sub.path}
+                          to={item.label === 'Services' ? '/services' : sub.path}
                           className="block text-text-light dark:text-white text-base font-cairo hover:text-optra-green transition-colors"
                           onClick={closeMenu} // Close mobile menu and dropdown on link click
                         >

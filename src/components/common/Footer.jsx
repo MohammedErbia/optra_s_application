@@ -43,27 +43,27 @@ const Footer = () => {
             <h3 className="text-text-light dark:text-white text-base font-medium mb-4 capitalize font-cairo transition-colors sm:text-sm md:text-base">Services</h3>
             <ul className="space-y-4">
               <li>
-                <Link to="/custom-software" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
+                <Link to="/services" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   Custom Software Solutions
                 </Link>
               </li>
               <li>
-                <Link to="/app-development" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
+                <Link to="/services" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   App Development
                 </Link>
               </li>
               <li>
-                <Link to="/technical-services" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
+                <Link to="/services" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   Technical Services
                 </Link>
               </li>
               <li>
-                <Link to="/ecommerce-solutions" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
+                <Link to="/services" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   E-commerce Solutions
                 </Link>
               </li>
               <li>
-                <Link to="/website-design" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
+                <Link to="/services" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
                   Website Design
                 </Link>
               </li>
