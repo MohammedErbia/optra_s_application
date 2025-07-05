@@ -11,6 +11,7 @@ import TwitterIcon from '../components/icons/TwitterIcon';
 import LinkedInIcon from '../components/icons/LinkedInIcon';
 import InstagramIcon from '../components/icons/InstagramIcon';
 import CopyLinkIcon from '../components/icons/CopyLinkIcon';
+import ScrollToTopButton from '../components/common/ScrollToTopButton';
 
 const CareerDetailsPage = () => {
   const { id } = useParams();
@@ -301,6 +302,7 @@ in
         )}
       </div>
 
+      <ScrollToTopButton />
       <Footer />
     </div>
   );

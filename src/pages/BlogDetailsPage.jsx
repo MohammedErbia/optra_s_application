@@ -7,6 +7,7 @@ import gsap from 'gsap';
 import { useBlogPostBySlug } from '../hooks/useBlogPostBySlug'; // Import the new hook
 import ShimmerCard from '../components/common/ShimmerCard'; // Use ShimmerCard for loading
 import { supabase } from '../lib/supabase.ts'; // Import supabase
+import ScrollToTopButton from '../components/common/ScrollToTopButton';
 
 const BlogDetailsPage = () => {
   const { isDarkMode } = useTheme();
@@ -255,6 +256,7 @@ const BlogDetailsPage = () => {
         </div>
       </section>
 
+      <ScrollToTopButton />
       <Footer />
     </div>
   );

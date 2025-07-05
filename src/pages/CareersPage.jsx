@@ -7,6 +7,7 @@ import useCareers from '../hooks/useCareers';
 import ShimmerCard from '../components/common/ShimmerCard';
 import useCareerCategories from '../hooks/useCareerCategories';
 import { Link } from 'react-router-dom';
+import ScrollToTopButton from '../components/common/ScrollToTopButton';
 
 const CareersPage = () => {
   const { isDarkMode } = useTheme();
@@ -219,7 +220,7 @@ const CareersPage = () => {
           </div>
         </div>
       </section>
-
+      <ScrollToTopButton />
       <Footer />
     </div>
   );

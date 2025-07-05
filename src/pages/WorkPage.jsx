@@ -4,6 +4,7 @@ import Footer from '../components/common/Footer';
 import { useTheme } from '../context/ThemeContext';
 import gsap from 'gsap';
 import ProjectsSection from './Home/ProjectsSection';
+import ScrollToTopButton from '../components/common/ScrollToTopButton';
 
 const WorkPage = () => {
   const { isDarkMode } = useTheme();
@@ -52,6 +53,7 @@ const WorkPage = () => {
       </section>
       {/* Our Work Section (from Home) */}
       <ProjectsSection />
+      <ScrollToTopButton />
       <Footer />
     </div>
   );

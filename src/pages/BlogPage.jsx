@@ -10,6 +10,7 @@ import { useBlogCategories } from '../hooks/useBlogCategories';
 import { useBlogTags } from '../hooks/useBlogTags';
 import { useBlogSearchSuggestions } from '../hooks/useBlogSearchSuggestions';
 import ShimmerCard from '../components/common/ShimmerCard';
+import ScrollToTopButton from '../components/common/ScrollToTopButton';
 
 const BlogPage = () => {
   const { isDarkMode } = useTheme();
@@ -382,6 +383,7 @@ const BlogPage = () => {
         </div>
       </section>
 
+      <ScrollToTopButton />
       <Footer />
     </div>
   );

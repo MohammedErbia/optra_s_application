@@ -3,6 +3,7 @@ import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
 import { useTheme } from '../context/ThemeContext';
 import gsap from 'gsap';
+import ScrollToTopButton from '../components/common/ScrollToTopButton';
 
 const WhoWeArePage = () => {
   const { isDarkMode } = useTheme();
@@ -110,6 +111,7 @@ const WhoWeArePage = () => {
         </div>
       </section>
 
+      <ScrollToTopButton />
       <Footer />
     </div>
   );

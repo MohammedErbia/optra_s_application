@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 import gsap from 'gsap';
 import { useData } from '../hooks/useData.ts';
 import { Link } from 'react-router-dom';
+import ScrollToTopButton from '../components/common/ScrollToTopButton';
 
 const ServicesPage = () => {
   const { isDarkMode } = useTheme();
@@ -80,6 +81,7 @@ const ServicesPage = () => {
           </div>
         </div>
       </section>
+      <ScrollToTopButton />
       <Footer />
     </div>
   );
