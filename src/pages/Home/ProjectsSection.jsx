@@ -52,26 +52,47 @@ const ProjectsSection = () => {
           </div>
         </div>
 
-        <div className="flex overflow-x-auto flex-nowrap gap-6 px-2 md:grid md:grid-cols-2 md:gap-8">
+        <div className="flex overflow-x-auto flex-nowrap gap-6 px-2 md:grid md:grid-cols-2 md:gap-8 pb-32">
           {filteredWorks.map((work) => (
-            <Link 
-              key={work.id} 
-              to={`/works/${work.slug}`}
-              className="flex-shrink-0 w-72 group relative overflow-hidden rounded-lg md:w-auto flex flex-col bg-white dark:bg-optra-darkGray transition-colors md:min-h-[350px] shadow-md"
-            >
-              <img 
-                src={work.image}
-                alt={work.title}
-                className="w-full h-48 object-cover transition-transform group-hover:scale-105 md:h-full md:w-full"
-              />
-              <div className="p-4 flex flex-col flex-grow">
-                <div className="uppercase text-xs md:text-sm font-semibold mb-2 text-gray-600 dark:text-optra-lightGray font-cairo transition-colors">
-                  {work["project-type"]?.toUpperCase() ?? ''}
+            work.url_work ? (
+              <a
+                key={work.id}
+                href={work.url_work}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 w-72 group relative overflow-hidden rounded-lg md:w-auto flex flex-col bg-white dark:bg-optra-darkGray transition-colors md:min-h-[350px] shadow-md cursor-pointer"
+              >
+                <img
+                  src={work.image}
+                  alt={work.title}
+                  className="w-full h-48 object-cover transition-transform group-hover:scale-105 md:h-full md:w-full"
+                />
+                <div className="p-4 flex flex-col flex-grow">
+                  <div className="uppercase text-xs md:text-sm font-semibold mb-2 text-gray-600 dark:text-optra-lightGray font-cairo transition-colors">
+                    {work["project-type"]?.toUpperCase() ?? ''}
+                  </div>
+                  <h3 className="text-text-light dark:text-white text-lg font-semibold mb-2 flex-grow transition-colors">{work.title}</h3>
+                  <span className="text-optra-green text-sm hover:underline mt-2">Browse →</span>
                 </div>
-                <h3 className="text-text-light dark:text-white text-lg font-semibold mb-2 flex-grow transition-colors">{work.title}</h3>
-                <span className="text-optra-green text-sm">View Case Study →</span>
+              </a>
+            ) : (
+              <div
+                key={work.id}
+                className="flex-shrink-0 w-72 group relative overflow-hidden rounded-lg md:w-auto flex flex-col bg-white dark:bg-optra-darkGray transition-colors md:min-h-[350px] shadow-md"
+              >
+                <img
+                  src={work.image}
+                  alt={work.title}
+                  className="w-full h-48 object-cover md:h-full md:w-full"
+                />
+                <div className="p-4 flex flex-col flex-grow">
+                  <div className="uppercase text-xs md:text-sm font-semibold mb-2 text-gray-600 dark:text-optra-lightGray font-cairo transition-colors">
+                    {work["project-type"]?.toUpperCase() ?? ''}
+                  </div>
+                  <h3 className="text-text-light dark:text-white text-lg font-semibold mb-2 flex-grow transition-colors">{work.title}</h3>
+                </div>
               </div>
-              </Link>
+            )
           ))}
         </div>
       </div>
