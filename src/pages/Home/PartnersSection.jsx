@@ -4,6 +4,7 @@ import { useTheme } from '../../context/ThemeContext';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslation } from 'react-i18next';
 gsap.registerPlugin(ScrollTrigger);
 
 const PartnersSection = () => {
@@ -14,6 +15,8 @@ const PartnersSection = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [hoveredIdx, setHoveredIdx] = useState(null);
   const scrollTweenRef = useRef(null);
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
 
   // GSAP fade/slide-in animation for each partner item
   useEffect(() => {
@@ -130,15 +133,16 @@ const PartnersSection = () => {
   return (
     <section className={`py-16 md:py-24 ${isDarkMode ? 'bg-[#18181B]' : 'bg-[#F3F4F6]'} transition-colors`}>
       <div className="container mx-auto px-6">
-        <div className="mb-12 text-left">
-          <div className={`uppercase tracking-[0.2em] text-base md:text-lg font-semibold mb-6 ${isDarkMode ? 'text-[#F3F4F6]/70' : 'text-[#18181B]/70'} sm:text-sm`}>Collaboration with leading companies</div>
+        <div className={`mb-12 ${isArabic ? 'text-right' : 'text-left'}`} dir={isArabic ? 'rtl' : 'ltr'}>
+          <div className={`uppercase tracking-[0.2em] text-base md:text-lg font-semibold mb-6 ${isDarkMode ? 'text-[#F3F4F6]/70' : 'text-[#18181B]/70'} sm:text-sm`}>{t('partners.collaboration')}</div>
           <h2 className={`text-4xl md:text-6xl font-extrabold mb-0 font-poppins ${isDarkMode ? 'text-white' : 'text-[#18181B]'} text-3xl sm:text-4xl md:text-5xl lg:text-6xl`} style={{ lineHeight: 1.1 }}>
-            We partner with <span className="text-[#14B8A6]">10+</span> leading<br className="hidden md:block" /> companies
+            {t('partners.wePartnerWith', { count: 10 })} <span className="text-[#14B8A6]">10+</span> {t('partners.leadingCompanies')}
           </h2>
         </div>
         <div className="flex justify-start">
           <div
             ref={scrollRef}
+            dir="ltr"
             className="flex flex-nowrap gap-0 md:gap-16 overflow-x-auto scrollbar-none px-2 md:px-8 py-4 w-full"
             tabIndex={0}
             style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}

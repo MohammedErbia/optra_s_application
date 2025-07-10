@@ -2,9 +2,12 @@ import React from 'react';
 import Card from '../../components/common/Card';
 import { useData } from '../../hooks/useData.ts';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import { useTranslation } from 'react-i18next';
 
 const ServicesSection = () => {
   const { data: services, loading, error } = useData({ table: 'services' });
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
 
   if (loading) return <div className="py-12"><LoadingSpinner size="large" /></div>;
   if (error || !services || services.length === 0) return null;
@@ -14,12 +17,12 @@ const ServicesSection = () => {
       <div className="container mx-auto px-6">
         <div className="mb-12">
           <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-text-light dark:text-white leading-tight mb-8 font-cairo transition-colors">
-            <span className="text-optra-green">Quality</span> you can rely on, in services 
-            <span className="block">you truly deserve</span>
+            <span className="text-optra-green">{t('services.quality')}</span> {t('services.relyOn')}
+            <span className="block">{t('services.trulyDeserve')}</span>
           </h2>
            
           <p className="text-lg text-text-light dark:text-white max-w-3xl font-cairo transition-colors sm:text-base md:text-lg">
-            Embark on a journey of innovation and technology with our wide range of services that enhance your digital presence, starting from captivating designs to intelligent, strategic solutions.
+            {t('services.intro')}
           </p>
         </div>
         
@@ -33,8 +36,8 @@ const ServicesSection = () => {
               style={{ minHeight: 300 }}
             >
               <Card
-                title={service.title}
-                description={service.description}
+                title={isArabic ? service.title_ar || service.title : service.title}
+                description={isArabic ? service.description_ar || service.description : service.description}
                 icon={
                   <img
                     src={service.icon_image}

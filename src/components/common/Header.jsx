@@ -2,28 +2,9 @@ import React, { useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Button from '../ui/Button';
 import ThemeToggle from '../ThemeToggle';
-
-const navItems = [
-  { label: 'Home', path: '/' },
-  { label: 'Why Optra?', path: '/who-we-are', dropdown: [
-    { label: 'Who We Are', path: '/who-we-are' },
-    { label: 'Vision', path: '/who-we-are' },
-    { label: 'Mission', path: '/who-we-are' },
-    { label: 'FAQ', path: '/faq' },
-    { label: 'Team', path: '/team' },
-  ] },
-  { label: 'Services', path: '/services', dropdown: [
-    { label: 'Web Application Development', path: '/web-development' },
-    { label: 'Mobile Application Development', path: '/mobile-development' },
-    { label: 'ERP Systems', path: '/erp-systems' },
-    { label: 'E-Commerce Solutions', path: '/ecommerce' },
-    { label: 'Translation Services', path: '/translation' },
-    { label: 'Digital Marketing', path: '/digital-marketing' },
-  ] },
-  { label: 'Works', path: '/works' },
-  { label: 'Blog', path: '/blog' },
-  { label: 'Careers', path: '/careers' },
-];
+import LanguageSwitcher from '../LanguageSwitcher';
+import { useData } from '../../hooks/useData.ts';
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -33,6 +14,33 @@ const Header = () => {
   const navRef = useRef();
   const sideMenuRef = useRef();
   const dropdownTimeoutRef = useRef(null); // Ref to store timeout ID
+
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
+  const { data: services, loading: servicesLoading } = useData({ table: 'services' });
+
+  const navItems = [
+    { label: 'nav.home', path: '/' },
+    ...(isArabic ? [{ label: 'spacer', isSpacer: true }] : []),
+    { label: 'nav.whyOptra', path: '/who-we-are', dropdown: [
+      { label: 'nav.whoWeAre', path: '/who-we-are' },
+      { label: 'nav.vision', path: '/who-we-are' },
+      { label: 'nav.mission', path: '/who-we-are' },
+      { label: 'nav.faq', path: '/faq' },
+      { label: 'nav.team', path: '/team' },
+    ] },
+    {
+      label: 'nav.services',
+      path: '/services',
+      dropdown: services.map(service => ({
+        label: isArabic ? service.title_ar || service.title : service.title,
+        path: '/services'
+      }))
+    },
+    { label: 'nav.works', path: '/works' },
+    { label: 'nav.blog', path: '/blog' },
+    { label: 'nav.careers', path: '/careers' },
+  ];
 
   // Handle nav underline
   const getActiveIndex = () => {
@@ -99,61 +107,63 @@ const Header = () => {
 
         <nav ref={navRef} className="hidden md:flex items-center space-x-6 relative">
           {navItems.map((item, idx) => (
-            <div
-              key={item.label}
-              className="relative flex flex-col items-center"
-              onMouseEnter={() => item.dropdown && handleDropdownEnter(idx)}
-              onMouseLeave={item.dropdown ? handleDropdownLeave : undefined}
-            >
-              <Link
-                to={item.path}
-                className={`text-text-light dark:text-white font-semibold text-base font-cairo px-2 pb-1 transition-colors ${activeIdx === idx ? 'relative' : ''}`}
-                style={{ position: 'relative' }}
+            item.isSpacer ? (
+              <span
+                key={`spacer-${idx}`}
+                aria-hidden="true"
+                style={{ display: 'inline-block', width: 40 }}
+                className="mx-2"
+              />
+            ) : (
+              <div
+                key={item.label}
+                className="relative flex flex-col items-center"
+                onMouseEnter={() => item.dropdown && handleDropdownEnter(idx)}
+                onMouseLeave={item.dropdown ? handleDropdownLeave : undefined}
               >
-                {item.label}
-                {activeIdx === idx && (
-                  <span className="absolute left-0 right-0 -bottom-1 h-1 bg-[#14B8A6] rounded transition-all" style={{ width: '100%' }} />
-                )}
-              </Link>
-              {item.dropdown && openDropdown === idx && (
-                <div 
-                  className="absolute top-full left-0 mt-2 w-56 bg-background-light dark:bg-optra-black border border-border-light dark:border-[#2c2c2c] rounded-md shadow-lg py-2 z-10 animate-fade-in"
-                  onMouseEnter={() => clearTimeout(dropdownTimeoutRef.current)} // Keep open when hovering dropdown
-                  onMouseLeave={handleDropdownLeave} // Set timeout to close when leaving dropdown
+                <Link
+                  to={item.path}
+                  className={`text-text-light dark:text-white font-semibold text-base font-cairo px-2 pb-1 transition-colors ${activeIdx === idx ? 'relative' : ''}`}
+                  style={{ position: 'relative' }}
                 >
-                  {item.dropdown.map((sub, subIdx) => (
-                    <Link
-                      key={`${sub.path}-${subIdx}`}
-                      to={item.label === 'Services' ? '/services' : sub.path}
-                      className="block px-4 py-2 text-text-light dark:text-white hover:bg-gray-100 dark:hover:bg-optra-darkGray"
-                      onClick={() => setOpenDropdown(null)} // Close dropdown on link click
-                    >
-                      {sub.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+                  {t(item.label) || item.label}
+                  {activeIdx === idx && (
+                    <span className="absolute left-0 right-0 -bottom-1 h-1 bg-[#14B8A6] rounded transition-all" style={{ width: '100%' }} />
+                  )}
+                </Link>
+                {item.dropdown && openDropdown === idx && (
+                  <div 
+                    className="absolute top-full left-0 mt-2 w-56 bg-background-light dark:bg-optra-black border border-border-light dark:border-[#2c2c2c] rounded-md shadow-lg py-2 z-10 animate-fade-in"
+                    onMouseEnter={() => clearTimeout(dropdownTimeoutRef.current)} // Keep open when hovering dropdown
+                    onMouseLeave={handleDropdownLeave} // Set timeout to close when leaving dropdown
+                  >
+                    {item.dropdown.map((sub, subIdx) => (
+                      <Link
+                        key={`${sub.path}-${subIdx}`}
+                        to={sub.path}
+                        className="block px-4 py-2 text-text-light dark:text-white hover:bg-gray-100 dark:hover:bg-optra-darkGray"
+                        onClick={() => setOpenDropdown(null)} // Close dropdown on link click
+                      >
+                        {sub.label.startsWith('nav.') ? t(sub.label) : sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )
           ))}
         </nav>
 
         <div className="hidden md:flex items-center space-x-4">
           <ThemeToggle />
-          <button
-            onClick={handleLanguageToggle}
-            className="flex items-center px-3 py-2 rounded-lg border border-[#14B8A6] text-[#14B8A6] font-bold font-cairo hover:bg-[#14B8A6] hover:text-white transition-colors"
-            aria-label="Toggle language"
-          >
-            <img src="/images/img_translate.svg" alt="Language" className="w-6 h-6 mr-1" />
-            {language === 'en' ? 'عربي' : 'English'}
-          </button>
+          <LanguageSwitcher />
           <Link to="/apply">
             <Button
               variant="primary"
               className="h-12 rounded-lg"
               icon={<img src="/images/img_icon_jamicons_outline_logos_arrowright.svg" alt="Arrow" className="w-6 h-6" />}
             >
-              Apply now
+              {t('nav.applyNow')}
             </Button>
           </Link>
         </div>
@@ -183,7 +193,7 @@ const Header = () => {
                 <div key={item.label}>
                   {item.dropdown ? (
                     <div className="text-text-light dark:text-white font-semibold text-lg font-cairo cursor-pointer" onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}>
-                      {item.label}
+                      {t(item.label) || item.label}
                     </div>
                   ) : (
                     <Link
@@ -191,7 +201,7 @@ const Header = () => {
                       className="block text-text-light dark:text-white font-semibold text-lg font-cairo hover:text-optra-green transition-colors"
                       onClick={closeMenu}
                     >
-                      {item.label}
+                      {t(item.label) || item.label}
                     </Link>
                   )}
                   {item.dropdown && openDropdown === item.label && (
@@ -199,11 +209,11 @@ const Header = () => {
                       {item.dropdown.map((sub, subIdx) => (
                         <Link
                           key={`${sub.path}-${subIdx}`}
-                          to={item.label === 'Services' ? '/services' : sub.path}
+                          to={sub.path}
                           className="block text-text-light dark:text-white text-base font-cairo hover:text-optra-green transition-colors"
                           onClick={closeMenu} // Close mobile menu and dropdown on link click
                         >
-                          {sub.label}
+                          {sub.label.startsWith('nav.') ? t(sub.label) : sub.label}
                         </Link>
                       ))}
                     </div>
@@ -228,7 +238,7 @@ const Header = () => {
                   icon={<img src="/images/img_icon_jamicons_outline_logos_arrowright.svg" alt="Arrow" className="w-6 h-6" />}
                    onClick={() => {window.location.href = '/apply'; closeMenu();}}
                 >
-                  Apply now
+                  {t('nav.applyNow')}
                 </Button>
               </Link>
             </div>

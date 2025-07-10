@@ -4,10 +4,13 @@ import { useTestimonials } from '../../hooks/useTestimonials';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { CSSTransition } from 'react-transition-group';
 import './TestimonialsSection.css'; // Import CSS for fade-in transition
+import { useTranslation } from 'react-i18next';
 
 const TestimonialsSection = () => {
   const { isDarkMode } = useContext(ThemeContext);
   const { data: testimonials, loading, error } = useTestimonials(); // Fetch testimonials
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
 
   const [currentPage, setCurrentPage] = useState(0);
   const [isVisible, setIsVisible] = useState(false); // State for fade-in animation
@@ -97,23 +100,23 @@ const TestimonialsSection = () => {
     setCurrentPage((prev) => (prev === pageCount - 1 ? 0 : prev + 1));
   };
 
-  if (error) return <div className="py-12 text-center text-red-500">Error loading testimonials: {error.message}</div>;
+  if (error) return <div className="py-12 text-center text-red-500">{t('testimonials.error', { error: error.message })}</div>;
 
   return (
     <section ref={sectionRef} className={`${isDarkMode ? 'bg-optra-darkGray' : 'bg-gray-50'} py-20 transition-colors`}>
       <div className="container mx-auto px-6">
         <div className="mb-12">
           <h2 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold ${isDarkMode ? 'text-white' : 'text-gray-900'} leading-tight mb-6 font-roboto`}>
-            What Our <span className="text-optra-green">Clients Say</span><br/> About Us
+            {t('testimonials.title')} <span className="text-optra-green">{t('testimonials.clientsSay')}</span><br/> {t('testimonials.aboutUs')}
           </h2>
           <p className={`text-xl ${isDarkMode ? 'text-white' : 'text-gray-600'} max-w-3xl font-roboto sm:text-base md:text-lg`}>
-            We are proud that our clients' experiences genuinely reflect the excellence of our digital services
+            {t('testimonials.subtitle')}
           </p>
         </div>
 
         {loading && <LoadingSpinner size="large" />}
         {!loading && (!testimonials || testimonials.length === 0) && (
-          <div className="text-center text-text-light dark:text-white">No testimonials available.</div>
+          <div className="text-center text-text-light dark:text-white">{t('testimonials.noTestimonials')}</div>
         )}
 
         {!loading && testimonials && testimonials.length > 0 && (
@@ -133,16 +136,16 @@ const TestimonialsSection = () => {
                     className={`testimonial-card flex flex-col ${isDarkMode ? 'bg-optra-darkGray border-optra-border' : 'bg-white border-gray-200'} border rounded-[10px] p-8 shadow-md ${index === highlightedItemIndex ? 'highlighted' : ''}`} // Apply highlighted class
                   >
                     <p className={`text-lg ${isDarkMode ? 'text-white' : 'text-gray-700'} mb-12 font-roboto flex-grow`}>
-                      {testimonial.quote}
+                      {isArabic ? testimonial.quote_ar || testimonial.quote : testimonial.quote}
                     </p>
-                    <div className="flex items-start">
+                    <div className={`flex items-center ${isArabic ? 'flex-row-reverse' : ''} gap-4`}>
                       <img 
                         src={testimonial.user_image}
-                        alt={testimonial.name}
-                        className="w-16 h-16 rounded-full mr-4 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16"
+                        alt={isArabic ? testimonial.name_ar || testimonial.name : testimonial.name}
+                        className="w-16 h-16 rounded-full w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16"
                       />
                       <h4 className={`text-lg font-normal ${isDarkMode ? 'text-white' : 'text-gray-900'} font-roboto text-base sm:text-lg`}>
-                        {testimonial.name}
+                        {isArabic ? testimonial.name_ar || testimonial.name : testimonial.name}
                       </h4>
                     </div>
                   </div>
@@ -151,10 +154,10 @@ const TestimonialsSection = () => {
 
               {/* Revert pagination controls to use handlePrevPage and handleNextPage */}
               {pageCount > 1 && (
-                <div className="flex items-left justify-left mt-8">
+                <div className={`flex items-center justify-left mt-8 gap-x-4 ${isArabic ? 'flex-row-reverse' : ''}`}>
                   <button 
                     onClick={handlePrevPage}
-                    className="w-12 h-12 rounded-full border-2 border-optra-green flex items-center justify-center mr-4 hover:bg-optra-green/10 transition-colors"
+                    className="w-12 h-12 rounded-full border-2 border-optra-green flex items-center justify-center hover:bg-optra-green/10 transition-colors"
                     aria-label="Previous testimonial page"
                   >
                     <img 

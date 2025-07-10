@@ -6,11 +6,14 @@ import gsap from 'gsap';
 import { useData } from '../hooks/useData.ts';
 import { Link } from 'react-router-dom';
 import ScrollToTopButton from '../components/common/ScrollToTopButton';
+import { useTranslation } from 'react-i18next';
 
 const ServicesPage = () => {
   const { isDarkMode } = useTheme();
   const aboutImageRef = useRef(null);
   const { data: services, loading, error } = useData({ table: 'services' });
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
 
   useEffect(() => {
     if (aboutImageRef.current) {
@@ -31,7 +34,7 @@ const ServicesPage = () => {
   }, []);
 
   return (
-    <div className="bg-background-light dark:bg-optra-black min-h-screen transition-colors">
+    <div className={`bg-background-light dark:bg-optra-black min-h-screen transition-colors`} dir={isArabic ? 'rtl' : 'ltr'}>
       <Header />
       {/* Hero Section */}
       <section className="relative bg-black text-white py-20 md:py-32 flex items-center justify-center min-h-[300px] md:min-h-[400px] overflow-hidden">
@@ -50,12 +53,12 @@ const ServicesPage = () => {
           style={{ filter: isDarkMode ? 'drop-shadow(-10px 8px 50px rgba(255, 255, 255, 0.4))' : 'drop-shadow(-10px 8px 50px rgba(0, 0, 0, 0.6))' }}
         />
         <div className="container mx-auto px-6 relative z-10 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold font-cairo text-white">Our Services</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold font-cairo text-white">{t('servicesPage.header')}</h1>
         </div>
       </section>
       {/* Services List Section */}
       <section className="py-16 dark:bg-[#121212] transition-colors">
-        <div className="container mx-auto px-6">
+        <div className={`container mx-auto px-6 ${isArabic ? 'text-right' : 'text-left'}`}>
           {loading && <div className="py-12 text-center text-text-light dark:text-white">Loading services...</div>}
           {error && <div className="py-12 text-center text-red-500">Error loading services.</div>}
           <div className="space-y-16">
@@ -69,11 +72,11 @@ const ServicesPage = () => {
                     style={{ filter: isDarkMode ? 'drop-shadow(0 0 2px #14B8A6)' : undefined }}
                   />
                 </div>
-                <div className="flex-1 text-center md:text-left md:ml-8 ml-0">
-                  <h2 className="text-2xl md:text-3xl font-bold text-text-light dark:text-white mb-4 font-cairo">{service.title}</h2>
-                  <p className="text-base md:text-lg text-gray-700 dark:text-optra-lightGray mb-6 font-roboto">{service.description}</p>
+                <div className={`flex-1 ${isArabic ? 'text-right md:text-right md:mr-8 mr-0' : 'text-center md:text-left md:ml-8 ml-0'}`}>
+                  <h2 className="text-2xl md:text-3xl font-bold text-text-light dark:text-white mb-4 font-cairo">{isArabic ? service.title_ar || service.title : service.title}</h2>
+                  <p className="text-base md:text-lg text-gray-700 dark:text-optra-lightGray mb-6 font-roboto">{isArabic ? service.description_ar || service.description : service.description}</p>
                   <Link to="/apply" className="inline-block py-3 px-8 bg-optra-green text-white font-semibold rounded-md hover:bg-green-600 transition-colors text-base md:text-lg">
-                    Apply now
+                    {t('servicesPage.applyNow')}
                   </Link>
                 </div>
               </div>

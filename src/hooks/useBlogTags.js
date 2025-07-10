@@ -12,7 +12,7 @@ export function useBlogTags() {
       try {
         const { data, error: fetchError } = await supabase
           .from('blog')
-          .select('tags');
+          .select('tags, tags_ar');
         
         if (fetchError) throw fetchError;
 
@@ -20,16 +20,26 @@ export function useBlogTags() {
         data.forEach(item => {
           if (item.tags) {
             const itemTagsString = String(item.tags);
-            itemTagsString.split(',').forEach(tag => {
+            const itemTagsArString = String(item.tags_ar || '');
+            const tagsArr = itemTagsString.split(',');
+            const tagsArArr = itemTagsArString.split(',');
+            tagsArr.forEach((tag, idx) => {
               const trimmedTag = tag.trim();
+              const trimmedTagAr = tagsArArr[idx] ? tagsArArr[idx].trim() : '';
               if (trimmedTag) {
-                allTags.push(trimmedTag);
+                allTags.push({ name: trimmedTag, name_ar: trimmedTagAr });
               }
             });
           }
         });
 
-        const uniqueTags = [...new Set(allTags)];
+        // Remove duplicates by English name
+        const seen = new Set();
+        const uniqueTags = allTags.filter(tagObj => {
+          if (seen.has(tagObj.name)) return false;
+          seen.add(tagObj.name);
+          return true;
+        });
         setTags(uniqueTags);
       } catch (err) {
         console.error("Error fetching blog tags:", err);

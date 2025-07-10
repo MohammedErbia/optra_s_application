@@ -16,7 +16,7 @@ export function useBlogPosts(page = 1, pageSize = 5, searchTerm = '', category =
 
         let query = supabase
           .from('blog')
-          .select('*', { count: 'exact' })
+          .select('*, title_ar, short_description_ar, content_ar', { count: 'exact' })
           .order('published_at', { ascending: false })
 
         if (searchTerm) {

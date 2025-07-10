@@ -11,6 +11,7 @@ import { useBlogTags } from '../hooks/useBlogTags';
 import { useBlogSearchSuggestions } from '../hooks/useBlogSearchSuggestions';
 import ShimmerCard from '../components/common/ShimmerCard';
 import ScrollToTopButton from '../components/common/ScrollToTopButton';
+import { useTranslation } from 'react-i18next';
 
 const BlogPage = () => {
   const { isDarkMode } = useTheme();
@@ -22,6 +23,9 @@ const BlogPage = () => {
   const [showSuggestions, setShowSuggestions] = useState(false); // State to control suggestion list visibility
   const searchInputRef = useRef(null); // Ref for the search input
   const postsPerPage = 5; // Number of posts per page
+
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
 
   // Fetch blog posts using the custom hook
   const { blogPosts, loading, error, totalCount } = useBlogPosts(currentPage, postsPerPage, searchTerm, selectedCategory, selectedTag);
@@ -90,8 +94,8 @@ const BlogPage = () => {
   };
 
   // Handle category click
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
+  const handleCategoryClick = (categoryObj) => {
+    setSelectedCategory(categoryObj.name);
     setSearchTerm(''); // Clear search term when selecting a category
     setSelectedTag(''); // Clear tag when selecting a category
     setCurrentPage(1); // Reset to first page on new category selection
@@ -99,8 +103,8 @@ const BlogPage = () => {
   };
 
   // Handle tag click
-  const handleTagClick = (tag) => {
-    setSelectedTag(tag);
+  const handleTagClick = (tagObj) => {
+    setSelectedTag(tagObj.name);
     setSearchTerm(''); // Clear search term when selecting a tag
     setSelectedCategory(''); // Clear category when selecting a tag
     setCurrentPage(1); // Reset to first page on new tag selection
@@ -166,7 +170,7 @@ const BlogPage = () => {
   };
 
   return (
-    <div className="bg-background-light dark:bg-optra-black min-h-screen transition-colors">
+    <div className={`bg-background-light dark:bg-optra-black min-h-screen transition-colors`} dir={isArabic ? 'rtl' : 'ltr'}>
       <Header />
 
       {/* Blog Header Section */}
@@ -186,7 +190,7 @@ const BlogPage = () => {
           style={{ filter: isDarkMode ? 'drop-shadow(-10px 8px 50px rgba(255, 255, 255, 0.4))': 'drop-shadow(-10px 8px 50px rgba(0, 0, 0, 0.6))'}}
         />
         <div className="container mx-auto px-6 relative z-10 text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-cairo">Blog</h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-cairo">{t('blogPage.header')}</h1>
         </div>
       </section>
 
@@ -202,15 +206,15 @@ const BlogPage = () => {
             ) : error ? (
               <div className="text-red-500">Error loading posts: {error.message}</div>
             ) : !blogPosts.length ? (
-              <div className="text-text-light dark:text-white">No blog posts found.</div>
+              <div className="text-text-light dark:text-white">{t('blogPage.noPostsFound')}</div>
             ) : (
               blogPosts.map(post => (
                 <div key={post.id} className="bg-white dark:bg-optra-black rounded-lg shadow-md overflow-hidden transition-colors border border-gray-200 dark:border-[#23232b]">
                   <img src={post.cover_image_url} alt={post.title} className="w-full h-64 object-cover" />
                   <div className="p-6">
-                    <h2 className="text-xl md:text-2xl font-bold text-text-light dark:text-white mb-4 font-cairo">{post.title}</h2>
-                    <p className="text-gray-600 dark:text-optra-lightGray text-base font-cairo leading-relaxed mb-6">{post.short_description}</p>
-                    <Link to={`/blog/${post.slug}`} className="text-optra-green font-semibold hover:underline">READ MORE</Link>
+                    <h2 className="text-xl md:text-2xl font-bold text-text-light dark:text-white mb-4 font-cairo">{isArabic ? post.title_ar || post.title : post.title}</h2>
+                    <p className="text-gray-600 dark:text-optra-lightGray text-base font-cairo leading-relaxed mb-6">{isArabic ? post.short_description_ar || post.short_description : post.short_description}</p>
+                    <Link to={`/blog/${post.slug}`} className="text-optra-green font-semibold hover:underline">{t('blogPage.readMore')}</Link>
                   </div>
                 </div>
               ))
@@ -224,7 +228,7 @@ const BlogPage = () => {
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
                 >
-                  Previous
+                  {t('blogPage.previous')}
                 </button>
                 {renderPaginationButtons()}
                 <button 
@@ -232,7 +236,7 @@ const BlogPage = () => {
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
                 >
-                  Next
+                  {t('blogPage.next')}
                 </button>
               </div>
             )}
@@ -245,7 +249,7 @@ const BlogPage = () => {
               <div className="relative" ref={searchInputRef}>
                 <input 
                   type="text" 
-                  placeholder="Search for..." 
+                  placeholder={t('blogPage.searchPlaceholder')} 
                   value={searchTerm}
                   onChange={handleSearchChange}
                   onFocus={() => searchTerm.length > 1 && setShowSuggestions(true)}
@@ -274,17 +278,17 @@ const BlogPage = () => {
                 )}
                 {showSuggestions && searchTerm.length > 1 && suggestionsLoading && (
                   <ul className="absolute left-0 right-0 bg-white dark:bg-optra-black border border-gray-200 dark:border-[#23232b] rounded-lg shadow-lg mt-1 z-10">
-                    <li className="p-3 text-text-light dark:text-white">Loading suggestions...</li>
+                    <li className="p-3 text-text-light dark:text-white">{t('blogPage.loadingSuggestions')}</li>
                   </ul>
                 )}
                 {showSuggestions && searchTerm.length > 1 && !suggestionsLoading && !suggestions.length && !suggestionsError && (
                   <ul className="absolute left-0 right-0 bg-white dark:bg-optra-black border border-gray-200 dark:border-[#23232b] rounded-lg shadow-lg mt-1 z-10">
-                    <li className="p-3 text-text-light dark:text-white">No suggestions found.</li>
+                    <li className="p-3 text-text-light dark:text-white">{t('blogPage.noSuggestionsFound')}</li>
                   </ul>
                 )}
                 {showSuggestions && searchTerm.length > 1 && suggestionsError && (
                   <ul className="absolute left-0 right-0 bg-white dark:bg-optra-black border border-gray-200 dark:border-[#23232b] rounded-lg shadow-lg mt-1 z-10">
-                    <li className="p-3 text-red-500">Error loading suggestions: {suggestionsError.message}</li>
+                    <li className="p-3 text-red-500">{t('blogPage.errorLoadingSuggestions')}</li>
                   </ul>
                 )}
               </div>
@@ -292,7 +296,7 @@ const BlogPage = () => {
 
             {/* Recent Posts */}
             <div className="bg-white dark:bg-optra-black p-6 rounded-lg shadow-md border border-gray-200 dark:border-[#23232b] transition-colors">
-              <h3 className="text-xl font-bold text-text-light dark:text-white mb-6 font-cairo">RECENT POST</h3>
+              <h3 className="text-xl font-bold text-text-light dark:text-white mb-6 font-cairo">{t('blogPage.recentPosts')}</h3>
               <div className="space-y-4">
                 {recentPostsLoading ? (
                   Array.from({ length: 3 }).map((_, index) => (
@@ -305,14 +309,14 @@ const BlogPage = () => {
                     </div>
                   ))
                 ) : recentPostsError ? (
-                  <div className="text-red-500">Error loading recent posts: {recentPostsError.message}</div>
+                  <div className="text-red-500">{t('blogPage.errorLoadingRecentPosts')}</div>
                 ) : !recentPosts.length ? (
-                  <div className="text-text-light dark:text-white">No recent posts found.</div>
+                  <div className="text-text-light dark:text-white">{t('blogPage.noRecentPostsFound')}</div>
                 ) : (
                   recentPosts.map(post => (
-                    <Link to={`/blog/${post.slug}`} key={post.id} className="flex items-center space-x-4 group">
+                    <Link to={`/blog/${post.slug}`} key={post.id} className={`flex items-center group ${isArabic ? 'flex-row-reverse gap-x-4' : 'gap-x-4'}`}>
                       <img src={post.cover_image_url} alt={post.title} className="w-24 h-16 object-cover rounded-md group-hover:scale-105 transition-transform duration-300"/>
-                      <p className="text-text-light dark:text-white text-sm font-cairo group-hover:text-optra-green transition-colors">{post.title}</p>
+                      <p className="text-text-light dark:text-white text-sm font-cairo group-hover:text-optra-green transition-colors">{isArabic ? post.title_ar || post.title : post.title}</p>
                     </Link>
                   ))
                 )}
@@ -321,28 +325,28 @@ const BlogPage = () => {
 
             {/* Categories */}
             <div className="bg-white dark:bg-optra-black p-6 rounded-lg shadow-md border border-gray-200 dark:border-[#23232b] transition-colors">
-              <h3 className="text-xl font-bold text-text-light dark:text-white mb-6 font-cairo">CATEGORY</h3>
+              <h3 className="text-xl font-bold text-text-light dark:text-white mb-6 font-cairo">{t('blogPage.categories')}</h3>
               <ul className="space-y-3">
                 {categoriesLoading ? (
                   Array.from({ length: 5 }).map((_, index) => (
                     <li key={index} className="h-5 bg-gray-300 dark:bg-gray-700 rounded w-3/4 animate-pulse"></li>
                   ))
                 ) : categoriesError ? (
-                  <div className="text-red-500">Error loading categories: {categoriesError.message}</div>
+                  <div className="text-red-500">{t('blogPage.errorLoadingCategories')}</div>
                 ) : !categories.length ? (
-                  <div className="text-text-light dark:text-white">No categories found.</div>
+                  <div className="text-text-light dark:text-white">{t('blogPage.noCategoriesFound')}</div>
                 ) : (
                   categories.map(category => (
-                    <li key={category}>
+                    <li key={category.name}>
                       <a 
                         href="#" 
-                        className={`flex items-center ${selectedCategory === category ? 'text-optra-green font-semibold' : 'text-text-light dark:text-white'} hover:text-optra-green transition-colors`}
+                        className={`flex items-center ${selectedCategory === category.name ? 'text-optra-green font-semibold' : 'text-text-light dark:text-white'} hover:text-optra-green transition-colors`}
                         onClick={(e) => {
                           e.preventDefault();
                           handleCategoryClick(category);
                         }}
                       >
-                        <span className="mr-2 text-optra-green">&#9656;</span> {category}
+                        <span className="mr-2 text-optra-green">&#9656;</span> {isArabic ? category.name_ar || category.name : category.name}
                       </a>
                     </li>
                   ))
@@ -352,28 +356,28 @@ const BlogPage = () => {
 
             {/* Tags */}
             <div className="bg-white dark:bg-optra-black p-6 rounded-lg shadow-md border border-gray-200 dark:border-[#23232b] transition-colors">
-              <h3 className="text-xl font-bold text-text-light dark:text-white mb-6 font-cairo">TAGS</h3>
+              <h3 className="text-xl font-bold text-text-light dark:text-white mb-6 font-cairo">{t('blogPage.tags')}</h3>
               <div className="flex flex-wrap gap-2">
                 {tagsLoading ? (
                   Array.from({ length: 4 }).map((_, index) => (
                     <div key={index} className="h-8 w-24 bg-gray-300 dark:bg-gray-700 rounded-full animate-pulse"></div>
                   ))
                 ) : tagsError ? (
-                  <div className="text-red-500">Error loading tags: {tagsError.message}</div>
+                  <div className="text-red-500">{t('blogPage.errorLoadingTags')}</div>
                 ) : !tags.length ? (
-                  <div className="text-text-light dark:text-white">No tags found.</div>
+                  <div className="text-text-light dark:text-white">{t('blogPage.noTagsFound')}</div>
                 ) : (
                   tags.map(tag => (
                     <a 
                       href="#" 
-                      key={tag} 
-                      className={`px-4 py-2 rounded-full ${selectedTag === tag ? 'bg-optra-green text-white' : 'bg-gray-100 dark:bg-optra-darkGray text-text-light dark:text-white'} text-sm hover:bg-optra-green hover:text-white transition-colors`}
+                      key={tag.name} 
+                      className={`px-4 py-2 rounded-full ${selectedTag === tag.name ? 'bg-optra-green text-white' : 'bg-gray-100 dark:bg-optra-darkGray text-text-light dark:text-white'} text-sm hover:bg-optra-green hover:text-white transition-colors`}
                       onClick={(e) => {
                         e.preventDefault();
                         handleTagClick(tag);
                       }}
                     >
-                      {tag}
+                      {isArabic ? tag.name_ar || tag.name : tag.name}
                     </a>
                   ))
                 )}

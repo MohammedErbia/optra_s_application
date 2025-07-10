@@ -4,11 +4,17 @@ import FacebookIcon from '../icons/FacebookIcon';
 import TwitterIcon from '../icons/TwitterIcon';
 import LinkedInIcon from '../icons/LinkedInIcon';
 import InstagramIcon from '../icons/InstagramIcon';
+import { useData } from '../../hooks/useData.ts';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
+  const { data: services, loading: servicesLoading } = useData({ table: 'services' });
 
   return (
     <footer className="bg-background-light dark:bg-optra-black pt-12 border-t border-gray-200 dark:border-[#2c2c2c] transition-colors">
@@ -20,7 +26,7 @@ const Footer = () => {
             />
             </Link>
             <p className="text-text-light dark:text-white text-base leading-relaxed mb-8 max-w-xs font-roboto transition-colors text-sm sm:text-base">
-              IT solutions Agency company founded in 2024, specializing in integrated software solutions that help businesses digitally transform and improve operational efficiency through custom-designed systems
+              {t('footer.description')}
             </p>
             
             <div className="flex space-x-4"> 
@@ -40,78 +46,64 @@ const Footer = () => {
           </div>
           
           <div className="col-span-1">
-            <h3 className="text-text-light dark:text-white text-base font-medium mb-4 capitalize font-cairo transition-colors sm:text-sm md:text-base">Services</h3>
+            <h3 className="text-text-light dark:text-white text-base font-medium mb-4 capitalize font-cairo transition-colors sm:text-sm md:text-base">{t('footer.services')}</h3>
             <ul className="space-y-4">
-              <li>
-                <Link to="/services" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
-                  Custom Software Solutions
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
-                  App Development
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
-                  Technical Services
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
-                  E-commerce Solutions
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
-                  Website Design
-                </Link>
-              </li>
+              {services.map(service => (
+                <li key={service.id}>
+                  <Link
+                    to="/services"
+                    className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base"
+                    onClick={scrollToTop}
+                  >
+                    {isArabic ? service.title_ar || service.title : service.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           
           <div className="col-span-1">
-            <h3 className="text-text-light dark:text-white text-base font-medium mb-4 capitalize font-cairo transition-colors sm:text-sm md:text-base">Why Optra?</h3>
+            <h3 className="text-text-light dark:text-white text-base font-medium mb-4 capitalize font-cairo transition-colors sm:text-sm md:text-base">{t('footer.whyOptra')}</h3>
             <ul className="space-y-4">
               <li>
                 <Link to="/who-we-are" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green lowercase font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
-                  Who We Are
+                  {t('footer.whoWeAre')}
                 </Link>
               </li>
               <li>
                 <Link to="/who-we-are" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
-                  Vision
+                  {t('footer.vision')}
                 </Link>
               </li>
               <li>
                 <Link to="/who-we-are" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
-                  Mission
+                  {t('footer.mission')}
                 </Link>
               </li>
               <li>
                 <Link to="/faq" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
-                  Frequently Asked Questions (FAQ)
+                  {t('footer.faq')}
                 </Link>
               </li>
               <li>
                 <Link to="/blog" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
-                  Blog
+                  {t('footer.blog')}
                 </Link>
               </li>
               <li>
                 <Link to="/team" className="text-gray-600 dark:text-[#e0e0e0] text-base hover:text-optra-green dark:hover:text-optra-green font-roboto transition-colors text-sm sm:text-base" onClick={scrollToTop}>
-                  Team
+                  {t('footer.team')}
                 </Link>
               </li>
             </ul>
           </div>
           
           <div className="col-span-1">
-            <h3 className="text-text-light dark:text-white text-base font-medium mb-4 font-roboto transition-colors sm:text-sm md:text-base">Contact Us</h3>
+            <h3 className="text-text-light dark:text-white text-base font-medium mb-4 font-roboto transition-colors sm:text-sm md:text-base">{t('footer.contact')}</h3>
             <ul className="space-y-4">
               <li className="flex items-start">
                 <img src="/images/img_marker.svg" alt="Location" className="w-6 h-6 mr-2 mt-0.5 w-5 h-5 sm:w-6 sm:h-6" />
-                <span className="text-gray-600 dark:text-[#e0e0e0] text-base font-roboto transition-colors text-sm sm:text-base">Palestine Gaza</span>
+                <span className="text-gray-600 dark:text-[#e0e0e0] text-base font-roboto transition-colors text-sm sm:text-base">{t('footer.location')}</span>
               </li>
               <li className="flex items-center">
                 <img src="/images/img_phone.svg" alt="Phone" className="w-5 h-5 mr-2 w-4 h-4 sm:w-5 sm:h-5" />
@@ -132,7 +124,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-200 dark:border-[#2c2c2c] mt-12 py-6 transition-colors">
           <p className="text-text-light dark:text-white text-base text-center font-roboto transition-colors text-sm sm:text-base">
-            All Rights Reserved 2025| @OPTRA SOFWARE SOLUTIONS AGENCY
+            {t('footer.rights')}
           </p>
         </div>
       </div>

@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const AboutSection = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="bg-background-light dark:bg-optra-black py-20 transition-colors">
       <div className="container mx-auto px-6">
@@ -32,10 +35,10 @@ const AboutSection = () => {
           
           <div>
             <h2 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-extrabold text-optra-green mb-6 font-cairo">
-              About optra
+              {t('about.title')}
             </h2>
             <p className="text-lg leading-9 text-text-light dark:text-white font-cairo transition-colors sm:text-base md:text-lg">
-              We Are IT solutions Agency company specializing in providing integrated software solutions, catering to the needs of businesses and organizations. Established in 2024 in an exceptional environment, we have quickly established ourselves thanks to a clear vision and a highly qualified team. We offer our services to enable companies to transform digitally and achieve greater operational efficiency through software systems specifically designed to suit the nature of their businesses.
+              {t('about.description')}
             </p>
           </div>
         </div>

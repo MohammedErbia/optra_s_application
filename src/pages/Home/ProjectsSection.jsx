@@ -1,34 +1,49 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useWorks } from '../../hooks/useWorks';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const ProjectsSection = () => {
   const { works, loading, error } = useWorks();
-  const [filter, setFilter] = useState('All');
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
+  const allLabel = t('work.all');
+  const [filter, setFilter] = useState(allLabel);
 
-  // Get unique project types
+  // Get unique project types (translated)
   const projectTypes = useMemo(() => {
-    const types = works.map(w => w["project-type"]).filter(Boolean);
-    return ['All', ...Array.from(new Set(types.map(type => type.trim())))];
-  }, [works]);
+    const types = works.map(w => isArabic ? w["project-type_ar"] || w["project-type"] : w["project-type"]).filter(Boolean);
+    const uniqueTypes = Array.from(new Set(types.map(type => type.trim())));
+    return [allLabel, ...uniqueTypes];
+  }, [works, isArabic, allLabel]);
 
-  // Filter works by selected type
-  const filteredWorks = filter === 'All' ? works : works.filter(w => w["project-type"] === filter);
+  // Update filter if language changes so 'All' stays selected
+  useEffect(() => {
+    setFilter(allLabel);
+  }, [allLabel]);
 
-  if (loading) return <div>Loading projects...</div>;
-  if (error) return <div>Error loading projects: {error}</div>;
+  // Filter works by selected type (translated)
+  const filteredWorks = filter === allLabel
+    ? works
+    : works.filter(w => {
+        const type = isArabic ? w["project-type_ar"] || w["project-type"] : w["project-type"];
+        return type === filter;
+      });
+
+  if (loading) return <div>{t('work.loading')}</div>;
+  if (error) return <div>{t('work.error', { error })}</div>;
 
   return (
     <section className="py-20 bg-background-light dark:bg-optra-black transition-colors">
       <div className="container mx-auto px-6">
-        <div className="text-left mb-12">
+        <div className={`mb-12 ${isArabic ? 'text-right' : 'text-left'}`} dir={isArabic ? 'rtl' : 'ltr'}>
           <div className="uppercase tracking-[0.2em] text-base md:text-lg font-semibold mb-2 text-text-light dark:text-white/70 font-cairo transition-colors sm:text-sm">
-            Our Work
+            {t('work.ourWork')}
           </div>
           <br />
           <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight font-cairo text-text-light dark:text-white transition-colors">
-            Experience the story behind our <br/>
-            <span className="text-optra-green">creative projects</span>
+            {t('work.experienceStory')} <br/>
+            <span className="text-optra-green">{t('work.creativeProjects')}</span>
           </h2>
         </div>
 
@@ -53,8 +68,9 @@ const ProjectsSection = () => {
         </div>
 
         <div className="flex overflow-x-auto flex-nowrap gap-6 px-2 md:grid md:grid-cols-2 md:gap-8 pb-32">
-          {filteredWorks.map((work) => (
-            work.url_work ? (
+          {filteredWorks.map((work) => {
+            const projectType = isArabic ? work["project-type_ar"] || work["project-type"] : work["project-type"];
+            return work.url_work ? (
               <a
                 key={work.id}
                 href={work.url_work}
@@ -64,15 +80,17 @@ const ProjectsSection = () => {
               >
                 <img
                   src={work.image}
-                  alt={work.title}
+                  alt={isArabic ? work.title_ar || work.title : work.title}
                   className="w-full h-48 object-cover transition-transform group-hover:scale-105 md:h-full md:w-full"
                 />
                 <div className="p-4 flex flex-col flex-grow">
                   <div className="uppercase text-xs md:text-sm font-semibold mb-2 text-gray-600 dark:text-optra-lightGray font-cairo transition-colors">
-                    {work["project-type"]?.toUpperCase() ?? ''}
+                    {projectType?.toUpperCase() ?? ''}
                   </div>
-                  <h3 className="text-text-light dark:text-white text-lg font-semibold mb-2 flex-grow transition-colors">{work.title}</h3>
-                  <span className="text-optra-green text-sm hover:underline mt-2">Browse →</span>
+                  <h3 className="text-text-light dark:text-white text-lg font-semibold mb-2 flex-grow transition-colors">
+                    {isArabic ? work.title_ar || work.title : work.title}
+                  </h3>
+                  <span className="text-optra-green text-sm hover:underline mt-2">{t('work.browse')}</span>
                 </div>
               </a>
             ) : (
@@ -82,18 +100,20 @@ const ProjectsSection = () => {
               >
                 <img
                   src={work.image}
-                  alt={work.title}
+                  alt={isArabic ? work.title_ar || work.title : work.title}
                   className="w-full h-48 object-cover md:h-full md:w-full"
                 />
                 <div className="p-4 flex flex-col flex-grow">
                   <div className="uppercase text-xs md:text-sm font-semibold mb-2 text-gray-600 dark:text-optra-lightGray font-cairo transition-colors">
-                    {work["project-type"]?.toUpperCase() ?? ''}
+                    {projectType?.toUpperCase() ?? ''}
                   </div>
-                  <h3 className="text-text-light dark:text-white text-lg font-semibold mb-2 flex-grow transition-colors">{work.title}</h3>
+                  <h3 className="text-text-light dark:text-white text-lg font-semibold mb-2 flex-grow transition-colors">
+                    {isArabic ? work.title_ar || work.title : work.title}
+                  </h3>
                 </div>
               </div>
-            )
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

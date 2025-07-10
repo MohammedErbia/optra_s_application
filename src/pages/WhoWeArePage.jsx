@@ -4,10 +4,13 @@ import Footer from '../components/common/Footer';
 import { useTheme } from '../context/ThemeContext';
 import gsap from 'gsap';
 import ScrollToTopButton from '../components/common/ScrollToTopButton';
+import { useTranslation } from 'react-i18next';
 
 const WhoWeArePage = () => {
   const { isDarkMode } = useTheme();
   const aboutImageRef = useRef(null); // Ref for the image in About Us header
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
 
   useEffect(() => {
     if (aboutImageRef.current) {
@@ -50,7 +53,7 @@ const WhoWeArePage = () => {
           style={{ filter: isDarkMode ? 'drop-shadow(-10px 8px 50px rgba(255, 255, 255, 0.4))': 'drop-shadow(-10px 8px 50px rgba(0, 0, 0, 0.6))'}}
         />
         <div className="container mx-auto px-6 relative z-10 text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-cairo">About us</h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-cairo">{t('aboutPage.header')}</h1>
         </div>
       </section>
 
@@ -60,13 +63,9 @@ const WhoWeArePage = () => {
         <img src="/images/img_frame_2310.svg" alt="Background Pattern" className="absolute top-0 left-0 z-0 h-[1020px] w-[366px]" />
         <div className="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-start gap-12 md:gap-24">
           <div className="md:w-1/2">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-light dark:text-white mb-6 font-cairo transition-colors">Who We Are</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-light dark:text-white mb-6 font-cairo transition-colors">{t('aboutPage.whoWeAreTitle')}</h2>
             <p className="text-text-light dark:text-white text-base md:text-lg font-cairo leading-relaxed transition-colors">
-              We Are IT solutions Agency company specializing in providing integrated software solutions, catering to the needs of
-              businesses and organizations. Established in 2024 in an exceptional environment, we have quickly established ourselves
-              thanks to a clear vision and a highly qualified team. We offer our services to enable companies to transform digitally and
-              achieve greater operational efficiency through software systems specifically designed to suit the nature of their
-              businesses.
+              {t('aboutPage.whoWeAreText')}
             </p>
           </div>
           <div className="md:w-1/2 flex justify-center items-center">
@@ -79,12 +78,9 @@ const WhoWeArePage = () => {
       <section id="vision" className="py-20 bg-white dark:bg-black transition-colors">
          <div className="container mx-auto px-6 flex flex-col md:flex-row-reverse items-center gap-12 md:gap-24">
           <div className="md:w-1/2">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-light dark:text-white mb-6 font-cairo transition-colors">Vision</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-light dark:text-white mb-6 font-cairo transition-colors">{t('aboutPage.visionTitle')}</h2>
             <p className="text-text-light dark:text-white text-base md:text-lg font-cairo leading-relaxed transition-colors">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-              laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-              beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-              odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+              {t('aboutPage.visionText')}
             </p>
           </div>
           <div className="md:w-1/2 flex justify-center items-center">
@@ -97,12 +93,9 @@ const WhoWeArePage = () => {
       <section id="mission" className="py-20 bg-background-light dark:bg-optra-darkGray transition-colors">
         <div className="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12 md:gap-24">
           <div className="md:w-1/2">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-light dark:text-white mb-6 font-cairo transition-colors">Mission</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-light dark:text-white mb-6 font-cairo transition-colors">{t('aboutPage.missionTitle')}</h2>
             <p className="text-text-light dark:text-white text-base md:text-lg font-cairo leading-relaxed transition-colors">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-              laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-              beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem voluptatem velit esse quam nihil
-              molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
+              {t('aboutPage.missionText')}
             </p>
           </div>
           <div className="md:w-1/2 flex justify-center items-center">

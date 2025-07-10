@@ -11,7 +11,7 @@ const useCareers = (category = null) => {
       setLoading(true);
       setError(null);
       try {
-        let query = supabase.from('careers').select('id, title, description, image, content, category, link_share, helpful_yes_count, helpful_no_count, job_summary, deadline');
+        let query = supabase.from('careers').select('id, title, title_ar, description, description_ar, image, content, category, link_share, helpful_yes_count, helpful_no_count, job_summary, deadline');
 
         if (category && category !== "All") {
           query = query.eq('category', category);

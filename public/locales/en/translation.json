@@ -1,0 +1,136 @@
+{
+  "welcome": "Welcome to Optra!",
+  "ourWork": "Our Work",
+  "experienceStory": "Experience the story behind our <1>creative projects</1>",
+  "weTransform": "We transform",
+  "ideas": "ideas",
+  "into": "into",
+  "digital": "digital",
+  "solutions": "Solutions",
+  "heroSubtitle": "A passionate collective of creatives, designers, and developers, committed to <br />making a real impact in digital development.",
+  "applyNow": "Apply now",
+  "viewWorks": "View works",
+  "partners": {
+    "collaboration": "Collaboration with leading companies",
+    "wePartnerWith": "We partner with",
+    "leadingCompanies": "leading companies"
+  },
+  "about": {
+    "title": "About optra",
+    "description": "We Are IT solutions Agency company specializing in providing integrated software solutions, catering to the needs of businesses and organizations. Established in 2024 in an exceptional environment, we have quickly established ourselves thanks to a clear vision and a highly qualified team. We offer our services to enable companies to transform digitally and achieve greater operational efficiency through software systems specifically designed to suit the nature of their businesses."
+  },
+  "mission": {
+    "title": "Delve into our mission and our dedication to",
+    "highlight": "elevating development",
+    "noStats": "No mission stats available."
+  },
+  "services": {
+    "quality": "Quality",
+    "relyOn": "you can rely on, in services",
+    "trulyDeserve": "you truly deserve",
+    "intro": "Embark on a journey of innovation and technology with our wide range of services that enhance your digital presence, starting from captivating designs to intelligent, strategic solutions."
+  },
+  "work": {
+    "ourWork": "Our Work",
+    "experienceStory": "Experience the story behind our",
+    "creativeProjects": "creative projects",
+    "all": "All",
+    "loading": "Loading projects...",
+    "error": "Error loading projects: {{error}}",
+    "browse": "Browse →"
+  },
+  "testimonials": {
+    "title": "What Our",
+    "clientsSay": "Clients Say",
+    "aboutUs": "About Us",
+    "subtitle": "We are proud that our clients' experiences genuinely reflect the excellence of our digital services",
+    "noTestimonials": "No testimonials available.",
+    "error": "Error loading testimonials: {{error}}"
+  },
+  "cta": {
+    "title": "We are here to provide diverse technical solutions and consultations to meet your needs.",
+    "contactUs": "Contact us"
+  },
+  "nav": {
+    "home": "Home",
+    "whyOptra": "Why Optra?",
+    "whoWeAre": "Who We Are",
+    "vision": "Vision",
+    "mission": "Mission",
+    "faq": "FAQ",
+    "team": "Team",
+    "services": "Services",
+    "works": "Works",
+    "blog": "Blog",
+    "careers": "Careers",
+    "applyNow": "Apply now"
+  },
+  "aboutPage": {
+    "header": "About us",
+    "whoWeAreTitle": "Who We Are",
+    "whoWeAreText": "We Are IT solutions Agency company specializing in providing integrated software solutions, catering to the needs of businesses and organizations. Established in 2024 in an exceptional environment, we have quickly established ourselves thanks to a clear vision and a highly qualified team. We offer our services to enable companies to transform digitally and achieve greater operational efficiency through software systems specifically designed to suit the nature of their businesses.",
+    "visionTitle": "Vision",
+    "visionText": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
+    "missionTitle": "Mission",
+    "missionText": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem voluptatem velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur."
+  },
+  "footer": {
+    "whyOptra": "Why Optra?",
+    "services": "Services",
+    "contact": "Contact",
+    "location": "Palestine, Gaza, Al-Rimal, Al-Sahaba St.",
+    "whoWeAre": "Who We Are",
+    "vision": "Vision",
+    "mission": "Mission",
+    "faq": "FAQ",
+    "blog": "Blog",
+    "team": "Team",
+    "rights": "© 2024 Optra Agency. All rights reserved.",
+    "description": "We Are IT solutions Agency company specializing in providing integrated software solutions, catering to the needs of businesses and organizations. Established in 2024 in an exceptional environment, we have quickly established ourselves thanks to a clear vision and a highly qualified team."
+  },
+  "servicesPage": {
+    "header": "Our Services",
+    "applyNow": "Apply now"
+  },
+  "careersPage": {
+    "header": "Careers",
+    "whyJoin1": "Why You Should Join Our",
+    "whyJoin2": "Awesome Team",
+    "whyJoinDesc": "We want you to feel at home when you are working at Optra Agency & for that we have curated a great set of benefits for you.",
+    "teamWorkTitle": "Team work",
+    "teamWorkDesc": "We believe in the power of collaboration and teamwork to achieve great results.",
+    "securedFutureTitle": "Secured Future",
+    "securedFutureDesc": "We offer stability and growth opportunities for your career.",
+    "learningOpportunityTitle": "Learning Opportunity",
+    "learningOpportunityDesc": "Continuous learning and development are at the core of our culture.",
+    "upgradeSkillsTitle": "Upgrade Skills",
+    "upgradeSkillsDesc": "We help you upgrade your skills and stay ahead in your field.",
+    "comeJoinUs": "Come Join Us",
+    "careerOpenings": "Career Openings",
+    "careerOpeningsDesc": "We're always looking for creative, talented self-starters to join the Optra family. Check out our open roles below and fill out an application.",
+    "all": "All",
+    "all_ar": "الكل",
+    "experience": "Experience",
+    "deadline": "Deadline"
+  },
+  "blogPage": {
+    "header": "Blog",
+    "noPostsFound": "No blog posts found.",
+    "readMore": "READ MORE",
+    "previous": "Previous",
+    "next": "Next",
+    "searchPlaceholder": "Search for...",
+    "loadingSuggestions": "Loading suggestions...",
+    "noSuggestionsFound": "No suggestions found.",
+    "errorLoadingSuggestions": "Error loading suggestions.",
+    "recentPosts": "RECENT POSTS",
+    "errorLoadingRecentPosts": "Error loading recent posts.",
+    "noRecentPostsFound": "No recent posts found.",
+    "categories": "CATEGORIES",
+    "errorLoadingCategories": "Error loading categories.",
+    "noCategoriesFound": "No categories found.",
+    "tags": "TAGS",
+    "errorLoadingTags": "Error loading tags.",
+    "noTagsFound": "No tags found."
+  }
+} 

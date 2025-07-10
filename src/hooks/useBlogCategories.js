@@ -12,12 +12,19 @@ export function useBlogCategories() {
       try {
         const { data, error } = await supabase
           .from('blog')
-          .select('category');
+          .select('category, category_ar');
         
         if (error) throw error;
 
         // Extract unique categories, handling potential nulls or empty strings
-        const uniqueCategories = [...new Set(data.map(item => item.category).filter(Boolean))];
+        const uniqueCategories = [];
+        const seen = new Set();
+        data.forEach(item => {
+          if (item.category && !seen.has(item.category)) {
+            uniqueCategories.push({ name: item.category, name_ar: item.category_ar });
+            seen.add(item.category);
+          }
+        });
         setCategories(uniqueCategories);
       } catch (error) {
         setError(error.message);

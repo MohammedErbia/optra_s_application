@@ -15,7 +15,7 @@ const useCareerCategories = () => {
         // Supabase does not have a direct count by group in a single select query via client library
         const { data, error } = await supabase
           .from('careers')
-          .select('category');
+          .select('category, category_ar');
 
         if (error) {
           throw error;
@@ -23,22 +23,22 @@ const useCareerCategories = () => {
 
         const categoryCounts = data.reduce((acc, job) => {
           const categoryName = job.category;
+          const categoryNameAr = job.category_ar;
           if (categoryName) {
-            acc[categoryName] = (acc[categoryName] || 0) + 1;
+            const key = categoryName;
+            acc[key] = acc[key] || { name: categoryName, name_ar: categoryNameAr, count: 0 };
+            acc[key].count += 1;
           }
           return acc;
         }, {});
 
-        const formattedCategories = Object.keys(categoryCounts).map(name => ({
-          name,
-          count: categoryCounts[name],
-        }));
+        const formattedCategories = Object.values(categoryCounts);
 
         // Add static categories if they don't exist in fetched data, and sort them
         const staticCategoriesOrder = ["HT & ADMIN", "ENGINEERING", "SUPPORT", "DESIGN", "DIGITAL MARKETING"];
         const finalCategories = staticCategoriesOrder.map(staticCat => {
             const foundCat = formattedCategories.find(fc => fc.name === staticCat);
-            return foundCat || { name: staticCat, count: 0 };
+            return foundCat || { name: staticCat, name_ar: '', count: 0 };
         });
 
         setCategories(finalCategories);
