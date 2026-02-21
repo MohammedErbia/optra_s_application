@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 const useCareerPostById = (id) => {
   const [careerPost, setCareerPost] = useState(null);
@@ -11,17 +12,15 @@ const useCareerPostById = (id) => {
       setLoading(true);
       setError(null);
       try {
-        const { data, error } = await supabase
-          .from('careers')
-          .select('*, helpful_yes_count, helpful_no_count, job_summary, forms')
-          .eq('id', id)
-          .single();
+        const docRef = doc(db, 'careers', id);
+        const docSnap = await getDoc(docRef);
 
-        if (error) {
-          throw error;
+        if (docSnap.exists()) {
+          setCareerPost({ id: docSnap.id, ...docSnap.data() });
+        } else {
+          setCareerPost(null);
         }
 
-        setCareerPost(data);
       } catch (err) {
         console.error("Error fetching career post by ID:", err);
         setError(err.message || "Failed to fetch career post.");

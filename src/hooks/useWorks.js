@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase.ts'
+import { db } from '../lib/firebase'
+import { collection, getDocs, query, orderBy } from 'firebase/firestore'
 
 export function useWorks() {
   const [works, setWorks] = useState([])
@@ -9,14 +10,15 @@ export function useWorks() {
   useEffect(() => {
     async function fetchWorks() {
       try {
-        const { data, error } = await supabase
-          .from('works')
-          .select('*')
-        
-        if (error) throw error
-        setWorks(data)
-      } catch (error) {
-        setError(error.message)
+        const q = query(collection(db, 'works'), orderBy('created_at', 'desc'))
+        const querySnapshot = await getDocs(q)
+        const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+
+        console.log('✅ Works fetched successfully:', data?.length || 0, 'items');
+        setWorks(data || [])
+      } catch (err) {
+        console.error('❌ Error fetching works:', err);
+        setError(err.message)
       } finally {
         setLoading(false)
       }

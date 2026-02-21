@@ -132,5 +132,39 @@
     "tags": "الوسوم",
     "errorLoadingTags": "حدث خطأ أثناء تحميل الوسوم.",
     "noTagsFound": "لا توجد وسوم."
+  },
+  "applyPage": {
+    "header": "تواصل معنا",
+    "chatTitle": "الدردشة",
+    "chatDesc": "تواصل مع أحد أعضاء فريق الدعم لدينا ",
+    "chatHours": "ساعات العمل: 4 صباحًا - 10 مساءً بتوقيت المحيط الهادئ، 7 أيام في الأسبوع",
+    "phoneTitle": "الهاتف",
+    "phoneHours": "ساعات العمل: 5 صباحًا – 8 مساءً بتوقيت المحيط الهادئ، 7 أيام في الأسبوع",
+    "holidayTitle": "العطل الرسمية",
+    "holidayDesc": "سيتم إغلاق مركز خدمة العملاء لدينا في العطل الرسمية التالية:",
+    "holidayNewYear": "رأس السنة الميلادية",
+    "holidayMemorial": "يوم الذكرى",
+    "holidayIndependence": "عيد الاستقلال",
+    "holidayLabor": "عيد العمال",
+    "holidayThanksgiving": "عيد الشكر",
+    "holidayChristmas": "عيد الميلاد",
+    "nameLabel": "الاسم",
+    "namePlaceholder": "اسمك",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "بريدك الإلكتروني",
+    "messageLabel": "الرسالة",
+    "messagePlaceholder": "اكتب رسالتك هنا",
+    "nameRequired": "الاسم مطلوب.",
+    "nameInvalid": "يرجى إدخال الاسم الأول واسم العائلة.",
+    "emailRequired": "البريد الإلكتروني مطلوب.",
+    "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح.",
+    "messageRequired": "الرسالة مطلوبة.",
+    "submitError": "فشل في إرسال الرسالة. يرجى المحاولة لاحقًا.",
+    "sending": "جاري الإرسال...",
+    "sendMessage": "إرسال الرسالة",
+    "successMessage": "تم إرسال رسالتك بنجاح!"
+  },
+  "workPage": {
+    "header": "أعمالنا"
   }
 } 

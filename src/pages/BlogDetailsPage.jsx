@@ -6,7 +6,8 @@ import { useTheme } from '../context/ThemeContext';
 import gsap from 'gsap';
 import { useBlogPostBySlug } from '../hooks/useBlogPostBySlug'; // Import the new hook
 import ShimmerCard from '../components/common/ShimmerCard'; // Use ShimmerCard for loading
-import { supabase } from '../lib/supabase.ts'; // Import supabase
+import { db } from '../lib/firebase'; // Import firebase
+import { doc, updateDoc, getDoc } from 'firebase/firestore'; // Import firestore functions
 import ScrollToTopButton from '../components/common/ScrollToTopButton';
 
 const BlogDetailsPage = () => {
@@ -68,25 +69,18 @@ const BlogDetailsPage = () => {
     const newCount = (type === 'yes' ? yesCount : noCount) + 1;
 
     try {
-      const { error: updateError } = await supabase
-        .from('blog')
-        .update({ [columnToUpdate]: newCount })
-        .eq('slug', slug);
+      const docRef = doc(db, 'blog', blogPost.id);
 
-      if (updateError) {
-        throw updateError;
+      await updateDoc(docRef, { [columnToUpdate]: newCount });
+
+      // Re-fetch the blog post to get the updated counts from Firestore
+      const docSnap = await getDoc(docRef);
+
+      if (!docSnap.exists()) {
+        throw new Error("Document not found after update");
       }
 
-      // Re-fetch the blog post to get the updated counts from Supabase
-      const { data: updatedPost, error: fetchUpdatedError } = await supabase
-        .from('blog')
-        .select('helpful_yes_count, helpful_no_count')
-        .eq('slug', slug)
-        .single();
-
-      if (fetchUpdatedError) {
-        throw fetchUpdatedError;
-      }
+      const updatedPost = docSnap.data();
 
       setYesCount(updatedPost.helpful_yes_count || 0);
       setNoCount(updatedPost.helpful_no_count || 0);
@@ -156,18 +150,18 @@ const BlogDetailsPage = () => {
       {/* Blog Header Section */}
       <section className="relative bg-black text-white py-20 md:py-32 flex items-center justify-center min-h-[400px] md:min-h-[500px] overflow-hidden">
         {/* Background Image */}
-        <img 
-          src="/images/img_group_2372.png" 
-          alt="Blog Background" 
+        <img
+          src="/images/img_group_2372.png"
+          alt="Blog Background"
           className="absolute inset-0 w-full h-full object-cover z-0 opacity-30"
         />
         {/* Animated Image Next to Title */}
-        <img 
+        <img
           ref={aboutImageRef}
           src={isDarkMode ? '/images/img_export_2.png' : '/images/export-2.png'}
           alt="Device Mockup"
-          className="absolute right-10 top-1/2 -translate-y-1/2 h-[200px] w-[200px] md:h-[300px] md:w-[300px] z-10 hidden md:block" 
-          style={{ filter: isDarkMode ? 'drop-shadow(-10px 8px 50px rgba(255, 255, 255, 0.4))': 'drop-shadow(-10px 8px 50px rgba(0, 0, 0, 0.6))'}}
+          className="absolute right-10 top-1/2 -translate-y-1/2 h-[200px] w-[200px] md:h-[300px] md:w-[300px] z-10 hidden md:block"
+          style={{ filter: isDarkMode ? 'drop-shadow(-10px 8px 50px rgba(255, 255, 255, 0.4))' : 'drop-shadow(-10px 8px 50px rgba(0, 0, 0, 0.6))' }}
         />
         <div className="container mx-auto px-6 relative z-10 text-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-cairo">{blogPost.title}</h1>
@@ -206,13 +200,13 @@ const BlogDetailsPage = () => {
                 </span>
               )}
             </div>
-          </div>  
+          </div>
 
           {blogPost.cover_image_url && blogPost.show_cover_image && (
             <img src={blogPost.cover_image_url} alt={blogPost.title} className="w-full h-auto rounded-lg mb-8 object-cover max-h-[400px]" />
           )}
-          
-          <div 
+
+          <div
             className="prose dark:prose-invert max-w-none text-gray-600 dark:text-optra-lightGray font-cairo leading-relaxed"
             dangerouslySetInnerHTML={{ __html: blogPost.content }}
           />
@@ -234,13 +228,13 @@ const BlogDetailsPage = () => {
             <div className="mt-12 p-6 bg-gray-100 dark:bg-optra-darkGray rounded-lg flex items-center justify-between opacity-100 transition-opacity duration-500">
               <p className="text-text-light dark:text-white font-cairo">Was this article helpful?</p>
               <div className="flex space-x-4">
-                <button 
+                <button
                   className="px-6 py-2 bg-optra-green text-white rounded-lg hover:bg-opacity-90 transition-colors"
                   onClick={() => handleVote('yes')}
                 >
                   Yes ({yesCount})
                 </button>
-                <button 
+                <button
                   className="px-6 py-2 border border-gray-300 dark:border-optra-gray text-text-light dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-[#2c2c2c] transition-colors"
                   onClick={() => handleVote('no')}
                 >

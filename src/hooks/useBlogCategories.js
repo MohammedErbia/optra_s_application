@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase.ts';
+import { db } from '../lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 export function useBlogCategories() {
   const [categories, setCategories] = useState([]);
@@ -10,11 +11,8 @@ export function useBlogCategories() {
     async function fetchCategories() {
       setLoading(true);
       try {
-        const { data, error } = await supabase
-          .from('blog')
-          .select('category, category_ar');
-        
-        if (error) throw error;
+        const querySnapshot = await getDocs(collection(db, 'blog'));
+        const data = querySnapshot.docs.map(doc => doc.data());
 
         // Extract unique categories, handling potential nulls or empty strings
         const uniqueCategories = [];
@@ -26,8 +24,8 @@ export function useBlogCategories() {
           }
         });
         setCategories(uniqueCategories);
-      } catch (error) {
-        setError(error.message);
+      } catch (err) {
+        setError(err.message);
       } finally {
         setLoading(false);
       }

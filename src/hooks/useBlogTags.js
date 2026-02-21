@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase.ts';
+import { db } from '../lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 export function useBlogTags() {
   const [tags, setTags] = useState([]);
@@ -10,26 +11,35 @@ export function useBlogTags() {
     async function fetchTags() {
       setLoading(true);
       try {
-        const { data, error: fetchError } = await supabase
-          .from('blog')
-          .select('tags, tags_ar');
-        
-        if (fetchError) throw fetchError;
+        const querySnapshot = await getDocs(collection(db, 'blog'));
+        const data = querySnapshot.docs.map(doc => doc.data());
 
         const allTags = [];
         data.forEach(item => {
           if (item.tags) {
-            const itemTagsString = String(item.tags);
-            const itemTagsArString = String(item.tags_ar || '');
-            const tagsArr = itemTagsString.split(',');
-            const tagsArArr = itemTagsArString.split(',');
-            tagsArr.forEach((tag, idx) => {
-              const trimmedTag = tag.trim();
-              const trimmedTagAr = tagsArArr[idx] ? tagsArArr[idx].trim() : '';
-              if (trimmedTag) {
-                allTags.push({ name: trimmedTag, name_ar: trimmedTagAr });
-              }
-            });
+            // Check if tags is an array in Firestore, otherwise handle string representation
+            if (Array.isArray(item.tags)) {
+              const tagsArArr = Array.isArray(item.tags_ar) ? item.tags_ar : [];
+              item.tags.forEach((tag, idx) => {
+                const trimmedTag = tag.trim();
+                const trimmedTagAr = tagsArArr[idx] ? tagsArArr[idx].trim() : '';
+                if (trimmedTag) {
+                  allTags.push({ name: trimmedTag, name_ar: trimmedTagAr });
+                }
+              });
+            } else {
+              const itemTagsString = String(item.tags);
+              const itemTagsArString = String(item.tags_ar || '');
+              const tagsArr = itemTagsString.split(',');
+              const tagsArArr = itemTagsArString.split(',');
+              tagsArr.forEach((tag, idx) => {
+                const trimmedTag = tag.trim();
+                const trimmedTagAr = tagsArArr[idx] ? tagsArArr[idx].trim() : '';
+                if (trimmedTag) {
+                  allTags.push({ name: trimmedTag, name_ar: trimmedTagAr });
+                }
+              });
+            }
           }
         });
 

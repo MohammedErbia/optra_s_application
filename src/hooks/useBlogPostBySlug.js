@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase.ts';
+import { db } from '../lib/firebase';
+import { collection, getDocs, query, where, limit } from 'firebase/firestore';
 
 export function useBlogPostBySlug(slug) {
   const [blogPost, setBlogPost] = useState(null);
@@ -15,20 +16,15 @@ export function useBlogPostBySlug(slug) {
 
       setLoading(true);
       try {
-        const { data, error: fetchError } = await supabase
-          .from('blog')
-          .select('*, helpful_yes_count, helpful_no_count')
-          .eq('slug', slug)
-          .single(); // Use .single() to get a single row
-        
-        if (fetchError) {
-          if (fetchError.code === 'PGRST116') { // No rows found
-            setBlogPost(null);
-          } else {
-            throw fetchError;
-          }
+        const q = query(collection(db, 'blog'), where('slug', '==', slug), limit(1));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+          setBlogPost(null);
+        } else {
+          const doc = querySnapshot.docs[0];
+          setBlogPost({ id: doc.id, ...doc.data() });
         }
-        setBlogPost(data);
       } catch (err) {
         console.error("Error fetching blog post by slug:", err);
         setError(err.message);

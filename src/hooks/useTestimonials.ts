@@ -1,28 +1,13 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase.ts';
-import { retry } from '../utils/retry';
+import { db } from '../lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 interface Testimonial {
   id: string;
   created_at: string;
   quote: string;
   name: string;
-  user_image: string; // Assuming user_image is a string URL or path
-}
-
-// Wrapper function with retry mechanism (copied from supabase.ts)
-async function supabaseQuery<T>(
-  query: () => Promise<{ data: T; error: any }>,
-  options = { maxAttempts: 3, delay: 1000 }
-) {
-  return retry(
-    async () => {
-      const { data, error } = await query();
-      if (error) throw error;
-      return data;
-    },
-    options
-  );
+  user_image: string;
 }
 
 export function useTestimonials() {
@@ -34,10 +19,8 @@ export function useTestimonials() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const result = await supabaseQuery<Testimonial[]>(async () => {
-          const { data, error } = await supabase.from('testimonials').select('*');
-          return { data, error };
-        });
+        const querySnapshot = await getDocs(collection(db, 'testimonials'));
+        const result = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Testimonial[];
         setData(result);
       } catch (err) {
         setError(err as Error);

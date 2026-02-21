@@ -5,10 +5,13 @@ import { useTheme } from '../context/ThemeContext';
 import gsap from 'gsap';
 import ProjectsSection from './Home/ProjectsSection';
 import ScrollToTopButton from '../components/common/ScrollToTopButton';
+import { useTranslation } from 'react-i18next';
 
 const WorkPage = () => {
   const { isDarkMode } = useTheme();
   const aboutImageRef = useRef(null);
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
 
   useEffect(() => {
     if (aboutImageRef.current) {
@@ -29,7 +32,7 @@ const WorkPage = () => {
   }, []);
 
   return (
-    <div className="bg-background-light dark:bg-optra-black min-h-screen transition-colors">
+    <div className={`bg-background-light dark:bg-optra-black min-h-screen transition-colors`} dir={isArabic ? 'rtl' : 'ltr'}>
       <Header />
       {/* Hero Section */}
       <section className="relative bg-black text-white py-20 md:py-32 flex items-center justify-center min-h-[300px] md:min-h-[400px] overflow-hidden">
@@ -48,7 +51,7 @@ const WorkPage = () => {
           style={{ filter: isDarkMode ? 'drop-shadow(-10px 8px 50px rgba(255, 255, 255, 0.4))' : 'drop-shadow(-10px 8px 50px rgba(0, 0, 0, 0.6))' }}
         />
         <div className="container mx-auto px-6 relative z-10 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold font-cairo text-white">Works</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold font-cairo text-white">{t('workPage.header')}</h1>
         </div>
       </section>
       {/* Our Work Section (from Home) */}

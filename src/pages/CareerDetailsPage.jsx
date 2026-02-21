@@ -5,7 +5,7 @@ import Footer from '../components/common/Footer';
 import { useTheme } from '../context/ThemeContext';
 import gsap from 'gsap';
 import useCareerPostById from '../hooks/useCareerPostById';
-import { supabase } from '../lib/supabase';
+// import { supabase } from '../lib/supabase';
 import FacebookIcon from '../components/icons/FacebookIcon';
 import TwitterIcon from '../components/icons/TwitterIcon';
 import LinkedInIcon from '../components/icons/LinkedInIcon';
@@ -74,30 +74,26 @@ const CareerDetailsPage = () => {
     }
 
     try {
-      const { error: updateError } = await supabase
-        .from('careers')
-        .update({
-          helpful_yes_count: newYesCount,
-          helpful_no_count: newNoCount,
-        })
-        .eq('id', id);
+      const { doc, updateDoc } = await import('firebase/firestore');
+      const { db } = await import('../lib/firebase');
 
-      if (updateError) {
-        console.error('Error updating vote counts:', updateError);
-        // Revert local state if update fails
-        if (type === 'yes') {
-          setYesCount(yesCount); // revert to original
-        } else {
-          setNoCount(noCount); // revert to original
-        }
-        alert('Failed to submit feedback. Please try again.');
-      } else {
-        localStorage.setItem(voteKey, 'true');
-        setShowFeedback(false);
-      }
+      const careerRef = doc(db, 'careers', id);
+      await updateDoc(careerRef, {
+        helpful_yes_count: newYesCount,
+        helpful_no_count: newNoCount,
+      });
+
+      localStorage.setItem(voteKey, 'true');
+      setShowFeedback(false);
     } catch (err) {
       console.error('Unexpected error during vote:', err);
-      alert('An unexpected error occurred. Please try again.');
+      // Revert local state if update fails
+      if (type === 'yes') {
+        setYesCount(yesCount); // revert to original
+      } else {
+        setNoCount(noCount); // revert to original
+      }
+      alert('Failed to submit feedback. Please try again.');
     }
   };
 
@@ -113,19 +109,19 @@ const CareerDetailsPage = () => {
     {
       platform: 'facebook',
       url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-      icon: <FacebookIcon className="w-8 h-8 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />, 
+      icon: <FacebookIcon className="w-8 h-8 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />,
       alt: 'Facebook'
     },
     {
       platform: 'twitter',
       url: `https://twitter.com/intent/tweet?text=${postTitle}&url=${encodedUrl}`,
-      icon: <TwitterIcon className="w-8 h-8 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />, 
+      icon: <TwitterIcon className="w-8 h-8 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />,
       alt: 'Twitter'
     },
     {
       platform: 'linkedin',
       url: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${postTitle}`,
-      icon: <LinkedInIcon className="w-8 h-8 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />, 
+      icon: <LinkedInIcon className="w-8 h-8 fill-gray-600 dark:fill-optra-lightGray hover:fill-optra-green dark:hover:fill-optra-green" />,
       alt: 'LinkedIn'
     }
   ];
@@ -137,18 +133,18 @@ const CareerDetailsPage = () => {
       {/* Page Header Section (Hero) */}
       <section className="relative bg-black text-white py-20 md:py-32 flex items-center justify-center min-h-[400px] md:min-h-[500px] overflow-hidden">
         {/* Background Image */}
-        <img 
-          src="/images/blog-background.svg" 
-          alt="Careers Background" 
+        <img
+          src="/images/blog-background.svg"
+          alt="Careers Background"
           className="absolute inset-0 w-full h-full object-cover z-0 opacity-30"
         />
         {/* Animated Image */}
-        <img 
+        <img
           ref={aboutImageRef}
           src={isDarkMode ? '/images/img_export_2.png' : '/images/export-2.png'}
           alt="Device Mockup"
-          className="absolute right-10 top-1/2 -translate-y-1/2 h-[200px] w-[200px] md:h-[300px] md:w-[300px] z-10 hidden md:block" 
-          style={{ filter: isDarkMode ? 'drop-shadow(-10px 8px 50px rgba(255, 255, 255, 0.4))': 'drop-shadow(-10px 8px 50px rgba(0, 0, 0, 0.6))'}}
+          className="absolute right-10 top-1/2 -translate-y-1/2 h-[200px] w-[200px] md:h-[300px] md:w-[300px] z-10 hidden md:block"
+          style={{ filter: isDarkMode ? 'drop-shadow(-10px 8px 50px rgba(255, 255, 255, 0.4))' : 'drop-shadow(-10px 8px 50px rgba(0, 0, 0, 0.6))' }}
         />
         <div className="container mx-auto px-6 relative z-10 text-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-cairo text-white">{careerPost.title}</h1>

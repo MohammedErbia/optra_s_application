@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase.ts'
+import { db } from '../lib/firebase'
+import { collection, getDocs } from 'firebase/firestore'
 
 export function usePartners() {
   const [partners, setPartners] = useState([])
@@ -9,14 +10,12 @@ export function usePartners() {
   useEffect(() => {
     async function fetchPartners() {
       try {
-        const { data, error } = await supabase
-          .from('partners')
-          .select('*')
-        
-        if (error) throw error
+        const querySnapshot = await getDocs(collection(db, 'partners'))
+        const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+
         setPartners(data)
-      } catch (error) {
-        setError(error.message)
+      } catch (err) {
+        setError(err.message)
       } finally {
         setLoading(false)
       }

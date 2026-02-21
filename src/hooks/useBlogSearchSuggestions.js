@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase.ts';
+import { db } from '../lib/firebase';
+import { collection, getDocs, limit, query } from 'firebase/firestore';
 
-export function useBlogSearchSuggestions(searchTerm, limit = 5) {
+export function useBlogSearchSuggestions(searchTerm, suggestionLimit = 5) {
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -20,14 +21,20 @@ export function useBlogSearchSuggestions(searchTerm, limit = 5) {
 
     debounceTimeout = setTimeout(async () => {
       try {
-        const { data, error } = await supabase
-          .from('blog')
-          .select('id, title, slug')
-          .or(`title.ilike.%${searchTerm}%,short_description.ilike.%${searchTerm}%`)
-          .limit(limit);
-        
-        if (error) throw error;
-        setSuggestions(data || []);
+        // Firestore lacks robust full-text search. Fetching a limited set and filtering in-memory
+        // as a workaround. A better solution (like Algolia or Typesense) is recommended for production.
+        const q = query(collection(db, 'blog'), limit(suggestionLimit * 5));
+        const querySnapshot = await getDocs(q);
+        let data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        const lowerSearchTerm = searchTerm.toLowerCase();
+
+        const filteredData = data.filter(post =>
+          (post.title && post.title.toLowerCase().includes(lowerSearchTerm)) ||
+          (post.short_description && post.short_description.toLowerCase().includes(lowerSearchTerm))
+        );
+
+        setSuggestions(filteredData.slice(0, suggestionLimit));
       } catch (err) {
         setError(err.message);
       } finally {
@@ -36,7 +43,7 @@ export function useBlogSearchSuggestions(searchTerm, limit = 5) {
     }, 300); // Debounce for 300ms
 
     return () => clearTimeout(debounceTimeout);
-  }, [searchTerm, limit]);
+  }, [searchTerm, suggestionLimit]);
 
   return { suggestions, loading, error };
 } 

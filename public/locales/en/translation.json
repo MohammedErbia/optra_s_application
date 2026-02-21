@@ -132,5 +132,39 @@
     "tags": "TAGS",
     "errorLoadingTags": "Error loading tags.",
     "noTagsFound": "No tags found."
+  },
+  "applyPage": {
+    "header": "Contact Us",
+    "chatTitle": "Chat",
+    "chatDesc": "Chat with a member of our support team",
+    "chatHours": "Hours: 4AM - 10PM PT, 7 days a week",
+    "phoneTitle": "Phone",
+    "phoneHours": "Hours: 5AM – 8PM PT, 7 days a week",
+    "holidayTitle": "Holiday Closures",
+    "holidayDesc": "Our Customer Contact Center will be closed to observe the following US Holidays:",
+    "holidayNewYear": "New Year's Day",
+    "holidayMemorial": "Memorial Day",
+    "holidayIndependence": "Independence Day",
+    "holidayLabor": "Labor Day",
+    "holidayThanksgiving": "Thanksgiving",
+    "holidayChristmas": "Christmas",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your Name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Your Email",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Your Message",
+    "nameRequired": "Name is required.",
+    "nameInvalid": "Please enter both first and last name.",
+    "emailRequired": "Email is required.",
+    "emailInvalid": "Please enter a valid email address.",
+    "messageRequired": "Message is required.",
+    "submitError": "Failed to send message. Please try again later.",
+    "sending": "Sending...",
+    "sendMessage": "Send Message",
+    "successMessage": "Your message has been sent successfully!"
+  },
+  "workPage": {
+    "header": "Works"
   }
 } 

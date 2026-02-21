@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 const useCareerCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -11,15 +12,8 @@ const useCareerCategories = () => {
       setLoading(true);
       setError(null);
       try {
-        // Fetch all jobs to count categories client-side
-        // Supabase does not have a direct count by group in a single select query via client library
-        const { data, error } = await supabase
-          .from('careers')
-          .select('category, category_ar');
-
-        if (error) {
-          throw error;
-        }
+        const querySnapshot = await getDocs(collection(db, 'careers'));
+        const data = querySnapshot.docs.map(doc => doc.data());
 
         const categoryCounts = data.reduce((acc, job) => {
           const categoryName = job.category;
@@ -37,8 +31,8 @@ const useCareerCategories = () => {
         // Add static categories if they don't exist in fetched data, and sort them
         const staticCategoriesOrder = ["HT & ADMIN", "ENGINEERING", "SUPPORT", "DESIGN", "DIGITAL MARKETING"];
         const finalCategories = staticCategoriesOrder.map(staticCat => {
-            const foundCat = formattedCategories.find(fc => fc.name === staticCat);
-            return foundCat || { name: staticCat, name_ar: '', count: 0 };
+          const foundCat = formattedCategories.find(fc => fc.name === staticCat);
+          return foundCat || { name: staticCat, name_ar: '', count: 0 };
         });
 
         setCategories(finalCategories);

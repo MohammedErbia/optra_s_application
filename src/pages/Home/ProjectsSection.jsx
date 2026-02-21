@@ -34,7 +34,7 @@ const ProjectsSection = () => {
   if (error) return <div>{t('work.error', { error })}</div>;
 
   return (
-    <section className="py-20 bg-background-light dark:bg-optra-black transition-colors">
+    <section className="py-20 bg-[#F3F4F6] dark:bg-optra-black transition-colors">
       <div className="container mx-auto px-6">
         <div className={`mb-12 ${isArabic ? 'text-right' : 'text-left'}`} dir={isArabic ? 'rtl' : 'ltr'}>
           <div className="uppercase tracking-[0.2em] text-base md:text-lg font-semibold mb-2 text-text-light dark:text-white/70 font-cairo transition-colors sm:text-sm">

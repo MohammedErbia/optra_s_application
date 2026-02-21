@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/firebase';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 const useCareers = (category = null) => {
   const [jobs, setJobs] = useState([]);
@@ -11,17 +12,15 @@ const useCareers = (category = null) => {
       setLoading(true);
       setError(null);
       try {
-        let query = supabase.from('careers').select('id, title, title_ar, description, description_ar, image, content, category, link_share, helpful_yes_count, helpful_no_count, job_summary, deadline');
+        let q = collection(db, 'careers');
 
         if (category && category !== "All") {
-          query = query.eq('category', category);
+          q = query(q, where('category', '==', category));
         }
 
-        const { data, error } = await query;
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-        if (error) {
-          throw error;
-        }
         setJobs(data);
       } catch (err) {
         console.error("Error fetching careers:", err);

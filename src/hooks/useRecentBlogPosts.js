@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase.ts';
+import { db } from '../lib/firebase';
+import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
 
-export function useRecentBlogPosts(limit = 5) {
+export function useRecentBlogPosts(postLimit = 5) {
   const [recentPosts, setRecentPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,23 +11,24 @@ export function useRecentBlogPosts(limit = 5) {
     async function fetchRecentPosts() {
       setLoading(true);
       try {
-        const { data, error } = await supabase
-          .from('blog')
-          .select('id, title, cover_image_url, slug')
-          .order('published_at', { ascending: false })
-          .limit(limit);
-        
-        if (error) throw error;
+        const q = query(
+          collection(db, 'blog'),
+          orderBy('published_at', 'desc'),
+          limit(postLimit)
+        );
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
         setRecentPosts(data || []);
-      } catch (error) {
-        setError(error.message);
+      } catch (err) {
+        setError(err.message);
       } finally {
         setLoading(false);
       }
     }
 
     fetchRecentPosts();
-  }, [limit]);
+  }, [postLimit]);
 
   return { recentPosts, loading, error };
 } 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase.ts'
+import { db } from '../lib/firebase'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 
 export function useBlogPosts(page = 1, pageSize = 5, searchTerm = '', category = '', tag = '') {
   const [blogPosts, setBlogPosts] = useState([])
@@ -11,31 +12,38 @@ export function useBlogPosts(page = 1, pageSize = 5, searchTerm = '', category =
     async function fetchBlogPosts() {
       setLoading(true)
       try {
-        const from = (page - 1) * pageSize
-        const to = from + pageSize - 1
-
-        let query = supabase
-          .from('blog')
-          .select('*, title_ar, short_description_ar, content_ar', { count: 'exact' })
-          .order('published_at', { ascending: false })
-
-        if (searchTerm) {
-          query = query.or(`title.ilike.%${searchTerm}%,short_description.ilike.%${searchTerm}%`)
-        }
+        let q = collection(db, 'blog')
 
         if (category) {
-          query = query.eq('category', category)
+          q = query(q, where('category', '==', category))
         }
+
+        const querySnapshot = await getDocs(q)
+        let data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
 
         if (tag) {
-          query = query.filter('tags', 'cs', `{${tag}}`)
+          data = data.filter(post => post.tags && post.tags.includes(tag))
         }
 
-        const { data, error: fetchError, count } = await query.range(from, to)
-        
-        if (fetchError) throw fetchError
-        setBlogPosts(data || [])
-        setTotalCount(count || 0)
+        if (searchTerm) {
+          const lower = searchTerm.toLowerCase()
+          data = data.filter(post =>
+            (post.title && post.title.toLowerCase().includes(lower)) ||
+            (post.short_description && post.short_description.toLowerCase().includes(lower))
+          )
+        }
+
+        // Sort in memory memory
+        data.sort((a, b) => (b.published_at?.toMillis?.() || 0) - (a.published_at?.toMillis?.() || 0))
+
+        setTotalCount(data.length)
+
+        // Manual pagination
+        const from = (page - 1) * pageSize
+        const to = from + pageSize
+        const paginatedData = data.slice(from, to)
+
+        setBlogPosts(paginatedData)
       } catch (err) {
         console.error("Error fetching blog posts:", err)
         setError(err.message)

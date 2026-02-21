@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { supabase } from '../lib/supabase.ts'
+// import { supabase } from '../lib/supabase.ts' // Removed supabase
 
 export function useAIChat() {
   const [messages, setMessages] = useState([])
@@ -11,18 +11,17 @@ export function useAIChat() {
       // Add user message
       setMessages(prev => [...prev, { role: 'user', content: message }])
 
-      // Get AI response from Supabase Edge Function
-      const { data, error } = await supabase.functions.invoke('ai-chat', {
-        body: { message, serviceType }
-      })
+      // Migration note: Supabase Edge Functions was used here.
+      console.warn('AI Chat is currently disabled. Needs migration to Firebase Cloud Functions.');
 
-      if (error) throw error
+      // Add a dummy response
+      setTimeout(() => {
+        setMessages(prev => [...prev, { role: 'assistant', content: 'AI chat service is temporarily unavailable.' }])
+        setLoading(false)
+      }, 1000)
 
-      // Add AI response
-      setMessages(prev => [...prev, { role: 'assistant', content: data.response }])
     } catch (error) {
       console.error('Error in AI chat:', error)
-    } finally {
       setLoading(false)
     }
   }

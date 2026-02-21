@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { supabase, supabaseQuery } from '../lib/supabase.ts';
+import { db } from '../lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 interface MissionStat {
   id: string;
@@ -18,10 +19,8 @@ export function useMissionStats() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const result = await supabaseQuery<MissionStat[]>(async () => {
-          const { data, error } = await supabase.from('mission_stats').select('*');
-          return { data, error };
-        });
+        const querySnapshot = await getDocs(collection(db, 'mission_stats'));
+        const result = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as MissionStat[];
         setData(result);
       } catch (err) {
         setError(err as Error);
